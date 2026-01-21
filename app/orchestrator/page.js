@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, Workflow, Bot, GitBranch, Shield } from "lucide-react";
+import { Workflow, Bot, GitBranch, Shield } from "lucide-react";
+import Nav from "../components/Nav";
 
 const accent = {
   from: "#54B3CA",
@@ -32,6 +33,7 @@ const FeatureCard = ({ icon: Icon, title, desc }) => (
 export default function OrchestratorPage() {
   return (
     <main className="min-h-screen">
+      <Nav />
       <div className="relative overflow-hidden">
         <Orb
           className="left-[-180px] top-[-140px] h-[520px] w-[520px] opacity-70"
@@ -43,16 +45,8 @@ export default function OrchestratorPage() {
         />
         <div className="absolute inset-0 -z-20 bg-grid opacity-60" />
 
-        <section className="pb-16 pt-24 md:pb-24 md:pt-32">
+        <section className="pb-16 pt-36 md:pb-24 md:pt-40">
           <Container>
-            <a
-              href="/"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-white/60 hover:text-white"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to home
-            </a>
-
             <div className="flex items-center gap-4 mb-6">
               <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
                 <Workflow className="h-7 w-7 text-emerald-300" />
