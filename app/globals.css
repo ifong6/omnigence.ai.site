@@ -17,10 +17,24 @@ html, body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+/* Smooth scroll with custom easing via JavaScript fallback */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body{
   background: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
+
 
 ::selection{
   background: rgba(63,188,149,0.25);
@@ -40,3 +54,4 @@ body{
 ::-webkit-scrollbar-track { background: #070A0D; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(63,188,149,0.35); }
+

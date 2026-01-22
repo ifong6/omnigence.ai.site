@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { motion } from "motion/react";
 import {
   ArrowRight,
   ShieldCheck,
@@ -12,7 +13,32 @@ import {
   Sparkles,
   CheckCircle2,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+// Custom smooth scroll with dramatic ease-out effect
+const smoothScrollTo = (targetY, duration = 1200) => {
+  const startY = window.scrollY;
+  const difference = targetY - startY;
+  const startTime = performance.now();
+
+  // Ease-out quint for very smooth, gradual slow-down
+  // Starts fast, then dramatically slows as it approaches target
+  const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
+
+  const animateScroll = (currentTime) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easeProgress = easeOutQuint(progress);
+
+    window.scrollTo(0, startY + difference * easeProgress);
+
+    if (progress < 1) {
+      requestAnimationFrame(animateScroll);
+    }
+  };
+
+  requestAnimationFrame(animateScroll);
+};
 
 const accent = {
   from: "#54B3CA",
@@ -147,9 +173,9 @@ const MiniStep = ({ n, title, desc }) => (
 );
 
 const Nav = () => (
-  <div className="fixed left-0 right-0 top-0 z-50">
+  <nav className="fixed left-0 right-0 top-0 z-50 bg-[#0B0F14]/80 backdrop-blur-md">
     <div className="mx-auto max-w-7xl px-6">
-      <div className="mt-4 flex items-center justify-between rounded-2xl px-4 py-3 backdrop-blur-md">
+      <div className="flex items-center justify-between py-4">
         <a href="#top" className="flex items-center gap-3">
           <Image
             src="/omnigence-logo.jpg"
@@ -172,20 +198,20 @@ const Nav = () => (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </a>
-            <div className="invisible absolute left-1/2 top-full pt-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100 -translate-x-1/2">
+            <div className="invisible absolute left-1/2 top-full pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 -translate-x-1/2">
               <div className="rounded-2xl border border-white/10 bg-black/90 backdrop-blur-md p-3 min-w-[180px]">
-                <a href="/omnifin" className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white/10">
+                <Link href="/omnifin" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
                   <FileSpreadsheet className="h-4 w-4 text-emerald-300" />
                   <span className="text-sm text-white">OmniFin</span>
-                </a>
-                <a href="/omnihr" className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white/10">
+                </Link>
+                <Link href="/omnihr" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
                   <Users className="h-4 w-4 text-emerald-300" />
                   <span className="text-sm text-white">OmniHR</span>
-                </a>
-                <a href="/orchestrator" className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white/10">
+                </Link>
+                <Link href="/orchestrator" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
                   <MultiAgentIcon className="h-4 w-4 text-emerald-300" />
                   <span className="text-sm text-white">Multi-agent</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -200,15 +226,18 @@ const Nav = () => (
           </a>
         </div>
 
-        <a
+        <motion.a
           href="#contact"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 450, damping: 30 }}
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white hover:bg-white/10"
         >
           Request access <ArrowRight className="h-4 w-4" />
-        </a>
+        </motion.a>
       </div>
     </div>
-  </div>
+  </nav>
 );
 
 const Orb = ({ className = "", style = {} }) => (
@@ -221,10 +250,38 @@ const Orb = ({ className = "", style = {} }) => (
 export default function Page() {
   const [email, setEmail] = useState("");
 
+  // Handle smooth scroll with easing for anchor links
+  useEffect(() => {
+    const handleAnchorClick = (e) => {
+      const href = e.currentTarget.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          const navHeight = 100;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navHeight;
+          const distance = Math.abs(targetPosition - window.scrollY);
+
+          // Dynamic duration: longer distance = longer duration (min 800ms, max 1600ms)
+          const duration = Math.min(1600, Math.max(800, distance * 0.8));
+          smoothScrollTo(targetPosition, duration);
+        }
+      }
+    };
+
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    anchors.forEach((anchor) => anchor.addEventListener("click", handleAnchorClick));
+
+    return () => {
+      anchors.forEach((anchor) => anchor.removeEventListener("click", handleAnchorClick));
+    };
+  }, []);
+
   const mailto = useMemo(() => {
     const subject = encodeURIComponent("Omnigence — Request access");
     const body = encodeURIComponent(
-      `Hi Omnigence,\n\nI’d like to request access / a demo.\n\nEmail: ${email || "<your email>"}\n\nWhat I want to automate:\n- Finance:\n- HR:\n- Other:\n\nThanks!`
+      `Hi Omnigence,\n\nI'd like to request access / a demo.\n\nEmail: ${email || "<your email>"}\n\nWhat I want to automate:\n- Finance:\n- HR:\n- Other:\n\nThanks!`
     );
     return `mailto:omnigence.ai@gmail.com?subject=${subject}&body=${body}`;
   }, [email]);
@@ -274,15 +331,18 @@ export default function Page() {
 
                 <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-start">
                   <div className="flex flex-col items-center">
-                    <a
+                    <motion.a
                       href={mailto}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 30 }}
                       className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-black"
                       style={{
                         backgroundImage: `linear-gradient(90deg, ${accent.from}, ${accent.to})`,
                       }}
                     >
                       Watch demo <ArrowRight className="h-4 w-4" />
-                    </a>
+                    </motion.a>
                     <span className="mt-1.5 text-xs text-white/40 text-center">End-to-end in 2 min.</span>
                   </div>
 

@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "motion/react";
 import { ArrowRight, FileSpreadsheet, Users } from "lucide-react";
 
 const MultiAgentIcon = ({ className = "" }) => (
@@ -25,12 +27,31 @@ const MultiAgentIcon = ({ className = "" }) => (
   </svg>
 );
 
+const NavLink = ({ href, children, className = "" }) => (
+  <Link
+    href={href}
+    className={`transition-colors hover:text-white ${className}`}
+  >
+    {children}
+  </Link>
+);
+
+const DropdownLink = ({ href, icon: Icon, children }) => (
+  <Link
+    href={href}
+    className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10"
+  >
+    <Icon className="h-4 w-4 text-emerald-300" />
+    <span className="text-sm text-white">{children}</span>
+  </Link>
+);
+
 export default function Nav() {
   return (
-    <div className="fixed left-0 right-0 top-0 z-50">
+    <nav className="fixed left-0 right-0 top-0 z-50 bg-[#0B0F14]/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mt-4 flex items-center justify-between rounded-2xl px-4 py-3 backdrop-blur-md">
-          <a href="/" className="flex items-center gap-3">
+        <div className="flex items-center justify-between py-4">
+          <Link href="/" className="flex items-center gap-3">
             <Image
               src="/omnigence-logo.jpg"
               alt="Omnigence logo"
@@ -42,7 +63,7 @@ export default function Nav() {
             <span className="text-sm font-semibold tracking-wide text-white">
               Omnigence
             </span>
-          </a>
+          </Link>
 
           <div className="hidden items-center gap-7 text-sm text-white/70 md:flex">
             <div className="group relative">
@@ -52,42 +73,40 @@ export default function Nav() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </a>
-              <div className="invisible absolute left-1/2 top-full pt-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100 -translate-x-1/2">
-                <div className="rounded-2xl border border-white/10 bg-black/90 backdrop-blur-md p-3 min-w-[180px]">
-                  <a href="/omnifin" className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white/10">
-                    <FileSpreadsheet className="h-4 w-4 text-emerald-300" />
-                    <span className="text-sm text-white">OmniFin</span>
-                  </a>
-                  <a href="/omnihr" className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white/10">
-                    <Users className="h-4 w-4 text-emerald-300" />
-                    <span className="text-sm text-white">OmniHR</span>
-                  </a>
-                  <a href="/orchestrator" className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white/10">
-                    <MultiAgentIcon className="h-4 w-4 text-emerald-300" />
-                    <span className="text-sm text-white">Multi-agent</span>
-                  </a>
-                </div>
+              <div className="invisible absolute left-1/2 top-full pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 -translate-x-1/2">
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="rounded-2xl border border-white/10 bg-black/90 backdrop-blur-md p-3 min-w-[180px]"
+                >
+                  <DropdownLink href="/omnifin" icon={FileSpreadsheet}>
+                    OmniFin
+                  </DropdownLink>
+                  <DropdownLink href="/omnihr" icon={Users}>
+                    OmniHR
+                  </DropdownLink>
+                  <DropdownLink href="/orchestrator" icon={MultiAgentIcon}>
+                    Multi-agent
+                  </DropdownLink>
+                </motion.div>
               </div>
             </div>
-            <a href="/#how" className="hover:text-white">
-              How it works
-            </a>
-            <a href="/#governance" className="hover:text-white">
-              Governance
-            </a>
-            <a href="/#contact" className="hover:text-white">
-              Contact
-            </a>
+            <NavLink href="/#how">How it works</NavLink>
+            <NavLink href="/#governance">Governance</NavLink>
+            <NavLink href="/#contact">Contact</NavLink>
           </div>
 
-          <a
+          <motion.a
             href="/#contact"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 450, damping: 30 }}
             className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white hover:bg-white/10"
           >
             Request access <ArrowRight className="h-4 w-4" />
-          </a>
+          </motion.a>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }

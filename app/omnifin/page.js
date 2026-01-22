@@ -1,12 +1,38 @@
 "use client";
 
+import { useState, useLayoutEffect } from "react";
 import Image from "next/image";
-import { FileSpreadsheet, FileText, BarChart3, Zap } from "lucide-react";
+import Link from "next/link";
+import { motion } from "motion/react";
+import { FileSpreadsheet, FileText, BarChart3, Zap, ArrowRight } from "lucide-react";
 import Nav from "../components/Nav";
 
 const accent = {
   from: "#54B3CA",
   to: "#3FBC95",
+};
+
+// Animation variants for hero only
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2, delay: 0.15 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+};
+
+const titleReveal = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+  },
 };
 
 const Orb = ({ className = "", style = {} }) => (
@@ -21,16 +47,22 @@ const Container = ({ children, className = "" }) => (
 );
 
 const FeatureCard = ({ icon: Icon, title, desc }) => (
-  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm">
     <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
       <Icon className="h-5 w-5 text-emerald-300" />
     </div>
-    <h3 className="mb-2 text-lg font-semibold text-emerald-300">{title}</h3>
+    <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
     <p className="text-sm leading-relaxed text-white/65">{desc}</p>
   </div>
 );
 
 export default function OmniFinPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useLayoutEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <main className="min-h-screen">
       <Nav />
@@ -47,24 +79,39 @@ export default function OmniFinPage() {
 
         <section className="pb-16 pt-36 md:pb-24 md:pt-40">
           <Container>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
-                <FileSpreadsheet className="h-7 w-7 text-emerald-300" />
-              </div>
-              <div>
-                <div className="text-xs font-semibold tracking-wide text-white/60 uppercase">
-                  Finance Automation
+            {/* Hero - Animated */}
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate={mounted ? "show" : "hidden"}
+            >
+              <motion.div variants={item} className="flex items-center gap-4 mb-6">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                  <FileSpreadsheet className="h-7 w-7 text-emerald-300" />
                 </div>
-                <h1 className="text-3xl font-semibold text-emerald-300 md:text-4xl">
-                  OmniFin
-                </h1>
-              </div>
-            </div>
+                <div>
+                  <div className="text-xs font-semibold tracking-wide text-white/60 uppercase">
+                    Finance Automation
+                  </div>
+                  <motion.h1
+                    variants={titleReveal}
+                    style={{ viewTransitionName: "page-title" }}
+                    className="text-3xl font-semibold text-white md:text-4xl"
+                  >
+                    OmniFin
+                  </motion.h1>
+                </div>
+              </motion.div>
 
-            <p className="max-w-2xl text-lg text-white/70 mb-12">
-              An <span className="font-semibold text-emerald-300">AI Secretary</span> that proactively analyzes, processes documents and keeps metrics current for daily finance management.
-            </p>
+              <motion.p
+                variants={item}
+                className="max-w-2xl text-lg text-white/70 mb-12"
+              >
+                An <span className="font-semibold text-emerald-300">AI Secretary</span> that proactively analyzes, processes documents and keeps metrics current for daily finance management.
+              </motion.p>
+            </motion.div>
 
+            {/* Feature Cards - Static */}
             <div className="grid gap-5 md:grid-cols-3 mb-16">
               <FeatureCard
                 icon={FileText}
@@ -83,8 +130,11 @@ export default function OmniFinPage() {
               />
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
-              <h2 className="text-xl font-semibold text-emerald-300 mb-3">Coming Soon</h2>
+            {/* CTA Card - Static */}
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center backdrop-blur-sm">
+              <h2 className="text-xl font-semibold text-emerald-300 mb-3">
+                Coming Soon
+              </h2>
               <p className="text-white/60 mb-6">
                 OmniFin is currently in development. Request early access to be notified when it launches.
               </p>
@@ -95,7 +145,7 @@ export default function OmniFinPage() {
                   backgroundImage: `linear-gradient(90deg, ${accent.from}, ${accent.to})`,
                 }}
               >
-                Request early access
+                Request early access <ArrowRight className="h-4 w-4" />
               </a>
             </div>
           </Container>
