@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omnigence Brand Lockup</title>
+  <style>
+    :root {
+      /* === TUNABLE VARIABLES === */
+
+      /* Glow settings */
+      --glow-strength: 0.08;        /* Opacity of the glow (0-1, keep low for subtlety) */
+      --glow-blur: 120px;           /* Blur radius of the glow */
+      --glow-size: 400px;           /* Size of the glow circle */
+
+      /* Reflection settings */
+      --reflection-opacity: 0.35;   /* Starting opacity of reflection (0-1) */
+      --reflection-fade: 100px;     /* Distance over which reflection fades out */
+      --reflection-blur: 1px;       /* Blur amount on reflection */
+      --reflection-gap: 4px;        /* Gap between lockup and reflection */
+
+      /* Shadow settings */
+      --shadow-strength: 0.4;       /* Opacity of drop shadow (0-1) */
+      --shadow-blur: 40px;          /* Blur radius of drop shadow */
+      --shadow-offset: 20px;        /* Vertical offset of drop shadow */
+
+      /* Grain settings */
+      --grain-opacity: 0.03;        /* Opacity of noise texture (keep very low) */
+
+      /* Icon settings */
+      --icon-size: 120px;           /* Size of the app icon */
+      --icon-radius: 26%;           /* Border radius for iOS-like shape */
+
+      /* Colors */
+      --bg-dark: #0B0F14;
+      --bg-mid: #141A22;
+      --accent-cyan: #54B3CA;
+      --accent-green: #3FBC95;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Subtle grain overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: var(--grain-opacity);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .lockup-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Subtle glow behind lockup */
+    .glow {
+      position: absolute;
+      width: var(--glow-size);
+      height: var(--glow-size);
+      background: radial-gradient(
+        circle,
+        rgba(84, 179, 202, var(--glow-strength)) 0%,
+        rgba(63, 188, 149, calc(var(--glow-strength) * 0.5)) 40%,
+        transparent 70%
+      );
+      filter: blur(var(--glow-blur));
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .lockup {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 5vw, 48px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* App Icon */
+    .icon {
+      width: var(--icon-size);
+      height: var(--icon-size);
+      border-radius: var(--icon-radius);
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 var(--shadow-offset) var(--shadow-blur) rgba(0, 0, 0, var(--shadow-strength)),
+        0 0 60px rgba(84, 179, 202, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+      flex-shrink: 0;
+    }
+
+    .icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.1) saturate(0.85) brightness(1.05);
+    }
+
+    /* Premium glass overlay */
+    .icon::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.1) 100%
+      );
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    /* Wordmark */
+    .wordmark {
+      font-size: clamp(36px, 8vw, 64px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: none;
+      filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.3));
+    }
+
+    /* Reflection container */
+    .reflection-wrapper {
+      position: relative;
+      margin-top: var(--reflection-gap);
+      z-index: 1;
+    }
+
+    .reflection {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 5vw, 48px);
+      transform: scaleY(-0.5) skewX(-30deg) translateX(28px) translateY(25px);
+      filter: blur(var(--reflection-blur));
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, var(--reflection-opacity)) 0%,
+        transparent var(--reflection-fade)
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, var(--reflection-opacity)) 0%,
+        transparent var(--reflection-fade)
+      );
+      opacity: var(--reflection-opacity);
+    }
+
+    .reflection .icon {
+      box-shadow: none;
+    }
+
+    .reflection .wordmark {
+      filter: none;
+      transform: rotate(-2.8deg);
+    }
+
+    /* Tagline */
+    .tagline {
+      margin-top: 28px;
+      font-size: clamp(14px, 2.5vw, 18px);
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: rgba(255, 255, 255, 0.5);
+      z-index: 1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      :root {
+        --icon-size: 80px;
+        --glow-size: 280px;
+        --shadow-blur: 25px;
+        --shadow-offset: 12px;
+      }
+
+      .lockup,
+      .reflection {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      :root {
+        --icon-size: 64px;
+      }
+
+      .lockup,
+      .reflection {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .reflection-wrapper {
+        display: none; /* Hide reflection on very small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lockup-container">
+    <!-- Subtle glow -->
+    <div class="glow"></div>
+
+    <!-- Main lockup -->
+    <div class="lockup">
+      <div class="icon">
+        <img src="logo.jpg" alt="Omnigence" />
+      </div>
+      <span class="wordmark">Omnigence</span>
+    </div>
+
+    <!-- Tagline -->
+    <p class="tagline">The AI you trust to automate what matters.</p>
+
+    <!-- Floor reflection -->
+    <div class="reflection-wrapper">
+      <div class="reflection">
+        <div class="icon">
+          <img src="logo.jpg" alt="Omnigence" />
+        </div>
+        <span class="wordmark">Omnigence</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

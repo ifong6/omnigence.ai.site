@@ -55,3 +55,34 @@ body{
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(63,188,149,0.35); }
 
+/* Brand lockup reflection */
+.brand-reflection {
+  transform: scaleY(-0.5) skewX(-30deg) translateX(28px) translateY(25px);
+  filter: blur(1px);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    transparent 100px
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    transparent 100px
+  );
+  opacity: 0.35;
+}
+
+.brand-reflection .brand-wordmark {
+  transform: rotate(-2.8deg);
+}
+
+/* Scroll indicator bounce */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.scroll-indicator {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+

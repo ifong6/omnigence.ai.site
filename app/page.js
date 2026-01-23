@@ -12,6 +12,11 @@ import {
   Users,
   Sparkles,
   CheckCircle2,
+  Check,
+  Clock,
+  Linkedin,
+  Menu,
+  X,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -121,7 +126,7 @@ const Pill = ({ children }) => (
   </span>
 );
 
-const Card = ({ icon: Icon, title, desc, tag, href }) => (
+const Card = ({ icon: Icon, title, desc, tag, href, iconColor = "text-emerald-300" }) => (
   <div className="group relative h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] p-7 backdrop-blur">
     <div
       className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -137,7 +142,7 @@ const Card = ({ icon: Icon, title, desc, tag, href }) => (
         </div>
       ) : null}
       <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
-        <Icon className="h-7 w-7 text-emerald-300" />
+        <Icon className={`h-7 w-7 ${iconColor}`} />
       </div>
       <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
       <p className="text-sm leading-relaxed text-white/65 text-justify">{desc}</p>
@@ -153,92 +158,169 @@ const Card = ({ icon: Icon, title, desc, tag, href }) => (
   </div>
 );
 
-const MiniStep = ({ n, title, desc }) => (
+const MiniStep = ({ n, title, desc, variant = "emerald" }) => {
+  const colors = {
+    emerald: {
+      bg: "rgba(63,188,149,0.18)",
+      border: "rgba(63,188,149,0.25)",
+      text: "#CFFBEA",
+      title: "text-emerald-300"
+    },
+    cyan: {
+      bg: "rgba(125,211,252,0.18)",
+      border: "rgba(125,211,252,0.25)",
+      text: "#CFFAFE",
+      title: "text-cyan-300"
+    }
+  };
+  const c = colors[variant];
+  return (
   <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
     <div className="mb-3 inline-flex items-center gap-2">
       <span
         className="inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold"
         style={{
-          background: "rgba(63,188,149,0.18)",
-          border: "1px solid rgba(63,188,149,0.25)",
-          color: "#CFFBEA",
+          background: c.bg,
+          border: `1px solid ${c.border}`,
+          color: c.text,
         }}
       >
         {n}
       </span>
-      <div className="text-sm font-semibold text-emerald-300">{title}</div>
+      <div className={`text-sm font-semibold ${c.title}`}>{title}</div>
     </div>
     <p className="text-sm leading-relaxed text-white/65">{desc}</p>
   </div>
-);
+);};
 
-const Nav = () => (
-  <nav className="fixed left-0 right-0 top-0 z-50 bg-[#0B0F14]/80 backdrop-blur-md">
-    <div className="mx-auto max-w-7xl px-6">
-      <div className="flex items-center justify-between py-4">
-        <a href="#top" className="flex items-center gap-3">
-          <Image
-            src="/omnigence-logo.jpg"
-            alt="Omnigence logo"
-            width={36}
-            height={36}
-            className="rounded-xl"
-            priority
-          />
-          <span className="text-sm font-semibold tracking-wide text-white">
-            Omnigence
-          </span>
-        </a>
+const Nav = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-        <div className="hidden items-center gap-7 text-sm text-white/70 md:flex">
-          <div className="group relative">
-            <a href="#solutions" className="hover:text-white flex items-center gap-1">
-              Solutions
-              <svg className="h-3 w-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-            <div className="invisible absolute left-1/2 top-full pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 -translate-x-1/2">
-              <div className="rounded-2xl border border-white/10 bg-black/90 backdrop-blur-md p-3 min-w-[180px]">
-                <Link href="/omnifin" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
-                  <FileSpreadsheet className="h-4 w-4 text-emerald-300" />
-                  <span className="text-sm text-white">OmniFin</span>
-                </Link>
-                <Link href="/omnihr" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
-                  <Users className="h-4 w-4 text-emerald-300" />
-                  <span className="text-sm text-white">OmniHR</span>
-                </Link>
-                <Link href="/orchestrator" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
-                  <MultiAgentIcon className="h-4 w-4 text-emerald-300" />
-                  <span className="text-sm text-white">Multi-agent</span>
-                </Link>
+  return (
+    <nav className="fixed left-0 right-0 top-0 z-50 bg-[#0B0F14]/80 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex items-center justify-between py-4">
+          <a href="#top" className="flex items-center gap-2.5">
+            <Image
+              src="/omnigence-logo.jpg"
+              alt="Omnigence logo"
+              width={28}
+              height={28}
+              className="rounded-md grayscale brightness-[2.2] contrast-[0.6] opacity-80"
+              priority
+            />
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+              Omnigence
+            </span>
+          </a>
+
+          <div className="hidden items-center gap-7 text-sm text-white/70 md:flex">
+            <div className="group relative">
+              <a href="#solutions" className="hover:text-white flex items-center gap-1">
+                Solutions
+                <svg className="h-3 w-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <div className="invisible absolute left-1/2 top-full pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 -translate-x-1/2">
+                <div className="rounded-2xl border border-white/10 bg-black/90 backdrop-blur-md p-3 min-w-[180px]">
+                  <Link href="/omnifin" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
+                    <FileSpreadsheet className="h-4 w-4 text-emerald-300" />
+                    <span className="text-sm text-white">OmniFin</span>
+                  </Link>
+                  <Link href="/omnihr" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
+                    <Users className="h-4 w-4 text-emerald-300" />
+                    <span className="text-sm text-white">OmniHR</span>
+                  </Link>
+                  <Link href="/orchestrator" className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-white/10">
+                    <MultiAgentIcon className="h-4 w-4 text-emerald-300" />
+                    <span className="text-sm text-white">Multi-agent</span>
+                  </Link>
+                </div>
               </div>
             </div>
+            <a href="#how" className="hover:text-white">
+              How it works
+            </a>
+            <a href="#governance" className="hover:text-white">
+              Governance
+            </a>
+            <a href="#contact" className="hover:text-white">
+              Contact
+            </a>
           </div>
-          <a href="#how" className="hover:text-white">
-            How it works
-          </a>
-          <a href="#governance" className="hover:text-white">
-            Governance
-          </a>
-          <a href="#contact" className="hover:text-white">
-            Contact
-          </a>
-        </div>
 
-        <motion.a
-          href="#contact"
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: "spring", stiffness: 450, damping: 30 }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white hover:bg-white/10"
-        >
-          Request access <ArrowRight className="h-4 w-4" />
-        </motion.a>
+          <div className="flex items-center gap-3">
+            <motion.a
+              href="#contact"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 450, damping: 30 }}
+              className="hidden md:inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white hover:bg-white/10"
+            >
+              Request access <ArrowRight className="h-4 w-4" />
+            </motion.a>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 p-2 text-white hover:bg-white/10"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  </nav>
-);
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="md:hidden border-t border-white/10 bg-[#0B0F14]/95 backdrop-blur-md"
+        >
+          <div className="px-6 py-4 space-y-4">
+            <a
+              href="#solutions"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm text-white/70 hover:text-white"
+            >
+              Solutions
+            </a>
+            <a
+              href="#how"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm text-white/70 hover:text-white"
+            >
+              How it works
+            </a>
+            <a
+              href="#governance"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm text-white/70 hover:text-white"
+            >
+              Governance
+            </a>
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm text-white/70 hover:text-white"
+            >
+              Contact
+            </a>
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm text-white/70 hover:text-white"
+            >
+              Request access
+            </a>
+          </div>
+        </motion.div>
+      )}
+    </nav>
+  );
+};
 
 const Orb = ({ className = "", style = {} }) => (
   <div
@@ -249,6 +331,7 @@ const Orb = ({ className = "", style = {} }) => (
 
 export default function Page() {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   // Handle smooth scroll with easing for anchor links
   useEffect(() => {
@@ -281,26 +364,125 @@ export default function Page() {
   const mailto = useMemo(() => {
     const subject = encodeURIComponent("Omnigence — Request access");
     const body = encodeURIComponent(
-      `Hi Omnigence,\n\nI'd like to request access / a demo.\n\nEmail: ${email || "<your email>"}\n\nWhat I want to automate:\n- Finance:\n- HR:\n- Other:\n\nThanks!`
+      `Hi Omnigence,\n\n${message || "<your message>"}`
     );
     return `mailto:omnigence.ai@gmail.com?subject=${subject}&body=${body}`;
-  }, [email]);
+  }, [email, message]);
 
   return (
-    <main id="top" className="min-h-screen">
+    <main id="top" className="min-h-screen relative">
+      {/* Global grid background */}
+      <div className="fixed inset-0 -z-20 bg-grid opacity-40" />
       <Nav />
 
+      {/* Brand Lockup Hero */}
+      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+        {/* Subtle glow - center */}
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-[60%] rounded-full blur-[120px]"
+          style={{
+            background: `radial-gradient(circle, rgba(84,179,202,0.08) 0%, rgba(63,188,149,0.04) 40%, transparent 70%)`,
+          }}
+        />
+
+        {/* Main lockup */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="flex flex-col items-center"
+        >
+          <div className="flex items-center gap-6 md:gap-12">
+            {/* Logo */}
+            <div
+              className="relative h-[80px] w-[80px] flex-shrink-0 overflow-hidden rounded-[26%] md:h-[120px] md:w-[120px]"
+              style={{
+                boxShadow: `0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1) inset`,
+              }}
+            >
+              <Image
+                src="/omnigence-logo.jpg"
+                alt="Omnigence"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            {/* Wordmark */}
+            <span
+              className="text-4xl font-medium tracking-tight text-white md:text-6xl"
+              style={{ textShadow: `0 2px 20px rgba(0,0,0,0.3)` }}
+            >
+              Omnigence
+            </span>
+          </div>
+
+          {/* Reflection */}
+          <div className="mt-1">
+            <div className="brand-reflection flex items-center gap-6 md:gap-12">
+              <div className="relative h-[80px] w-[80px] flex-shrink-0 overflow-hidden rounded-[26%] md:h-[120px] md:w-[120px]">
+                <Image
+                  src="/omnigence-logo.jpg"
+                  alt=""
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <span className="brand-wordmark text-4xl font-medium tracking-tight text-white md:text-6xl">
+                Omnigence
+              </span>
+            </div>
+          </div>
+
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-7 text-sm font-light uppercase tracking-[0.25em] text-white/70 md:text-base"
+          >
+            The AI you trust to automate what matters.
+          </motion.p>
+        </motion.div>
+
+        {/* Wide arc glow at bottom */}
+        <div
+          className="pointer-events-none absolute bottom-[-150px] left-1/2 -translate-x-1/2 h-[250px] w-[90vw] rounded-[50%] blur-[80px] opacity-30"
+          style={{ background: "rgba(84,179,202,0.25)" }}
+        />
+
+        {/* Scroll indicator */}
+        <motion.a
+          href="#content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="scroll-indicator absolute bottom-12 flex flex-col items-center gap-3 text-white/40 hover:text-white/60 transition-colors"
+        >
+          <span className="text-sm font-light tracking-widest">Scroll to explore</span>
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.a>
+      </section>
+
       {/* Background */}
-      <div className="relative overflow-hidden">
+      <div id="content" className="relative overflow-visible">
         <Orb
-          className="left-[-180px] top-[-140px] h-[520px] w-[520px] opacity-70"
-          style={{ background: "rgba(84,179,202,0.22)" }}
+          className="left-[-180px] top-[200px] h-[520px] w-[520px] opacity-50"
+          style={{ background: "rgba(84,179,202,0.15)" }}
         />
         <Orb
-          className="right-[-220px] top-[120px] h-[640px] w-[640px] opacity-60"
-          style={{ background: "rgba(63,188,149,0.18)" }}
+          className="right-[-220px] top-[300px] h-[640px] w-[640px] opacity-40"
+          style={{ background: "rgba(63,188,149,0.12)" }}
         />
-        <div className="absolute inset-0 -z-20 bg-grid opacity-60" />
 
         {/* Hero */}
         <section className="pb-16 pt-36 md:pb-24 md:pt-40">
@@ -497,7 +679,7 @@ export default function Page() {
             >
               <motion.div variants={fadeUp} className="flex items-end justify-between gap-6">
                 <div>
-                  <h2 className="text-2xl font-semibold text-emerald-300 md:text-3xl">
+                  <h2 className="text-4xl font-bold text-emerald-300 md:text-5xl">
                     Solutions
                   </h2>
                   <p className="mt-2 max-w-2xl text-sm text-white/65 md:text-base">
@@ -521,7 +703,8 @@ export default function Page() {
                     icon={Users}
                     tag="HR automation"
                     title="OmniHR"
-                    desc={<>Streamline onboarding, forms, approvals, and employee workflows—while keeping <span className="font-semibold text-emerald-300">humans in control</span>.</>}
+                    iconColor="text-cyan-300"
+                    desc={<>Streamline onboarding, forms, approvals, and employee workflows—while keeping <span className="font-semibold text-cyan-300">humans in control</span>.</>}
                     href="/omnihr"
                   />
                 </motion.div>
@@ -542,16 +725,35 @@ export default function Page() {
         {/* How it works */}
         <section id="how" className="py-16 md:py-20">
           <Container>
-            <div className="grid gap-10 md:grid-cols-[1fr_1fr] md:items-start">
+            <div className="grid gap-10 md:grid-cols-[1fr_1fr] md:items-center">
+              <div className="grid gap-4">
+                <MiniStep
+                  n="1"
+                  title="Ingest"
+                  desc="PDFs, forms, spreadsheets, emails, or APIs — bring your operational data in."
+                />
+                <MiniStep
+                  n="2"
+                  title="Govern"
+                  desc="Schema validation, policy checks, approvals, and HITL checkpoints when confidence is low."
+                  variant="cyan"
+                />
+                <MiniStep
+                  n="3"
+                  title="Execute"
+                  desc="Tool calls, retries, and observable runs — with an auditable history for every workflow."
+                />
+              </div>
+
               <div>
-                <h2 className="text-2xl font-semibold text-emerald-300 md:text-3xl">
+                <h2 className="text-4xl font-bold text-emerald-300 md:text-5xl">
                   How it works
                 </h2>
-                <p className="mt-3 max-w-xl text-sm text-white md:text-base">
+                <p className="mt-5 max-w-xl text-sm text-white md:text-base">
                   A clean pipeline from messy inputs to safe, repeatable outcomes—designed for real operations.
                 </p>
 
-                <div className="mt-7 space-y-3 text-sm text-white">
+                <div className="mt-7 space-y-5 text-sm text-white">
                   {[
                     "Extract structured fields from documents, emails, portals, and APIs.",
                     "Validate rules + request missing info (HITL when needed).",
@@ -563,60 +765,102 @@ export default function Page() {
                     </div>
                   ))}
                 </div>
-              </div>
 
-              <div className="grid gap-4">
-                <MiniStep
-                  n="1"
-                  title="Ingest"
-                  desc="PDFs, forms, spreadsheets, emails, or APIs — bring your operational data in."
-                />
-                <MiniStep
-                  n="2"
-                  title="Govern"
-                  desc="Schema validation, policy checks, approvals, and HITL checkpoints when confidence is low."
-                />
-                <MiniStep
-                  n="3"
-                  title="Execute"
-                  desc="Tool calls, retries, and observable runs — with an auditable history for every workflow."
-                />
+                <div className="mt-6 flex flex-wrap gap-3 pl-7">
+                  {["On Cloud", "Chat to Output", "Upload to Generate"].map((tag, i) => (
+                    <span
+                      key={i}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href="#contact"
+                  className="mt-7 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-black"
+                  style={{
+                    backgroundImage: "linear-gradient(90deg, #54B3CA, #3FBC95)",
+                  }}
+                >
+                  See it in action <ArrowRight className="h-4 w-4" />
+                </a>
               </div>
             </div>
           </Container>
         </section>
 
         {/* Governance */}
-        <section id="governance" className="py-16 md:py-20">
+        <section
+          id="governance"
+          className="relative py-16 md:py-20"
+          style={{
+            background: "radial-gradient(700px circle at 70% 30%, rgba(125,211,252,0.05), transparent 50%)"
+          }}
+        >
           <Container>
             <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 md:p-10">
-              <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+              <div className="flex flex-col gap-8 md:flex-row md:items-start md:gap-12">
                 <div className="max-w-2xl">
                   <h2 className="text-2xl font-semibold text-emerald-300 md:text-3xl">
                     Governance & security
                   </h2>
                   <p className="mt-3 text-sm text-white/65 md:text-base">
-                    Automation is only useful when it’s safe. Omnigence is built
+                    Automation is only useful when it's safe. Omnigence is built
                     around policy, observability, and human oversight.
                   </p>
+
+                  {/* Three Pillars + Flow Diagram */}
+                  <div className="mt-8">
+                    <div className="flex gap-16 pl-[5rem]">
+                      {[
+                        { num: "01", label: "Policy" },
+                        { num: "02", label: "Observability" },
+                        { num: "03", label: "Oversight" },
+                      ].map((pillar, i) => (
+                        <div key={i} className="text-center">
+                          <div className="text-2xl font-bold text-white md:text-3xl">
+                            {pillar.num}
+                          </div>
+                          <div className="mt-1 text-xs font-medium text-white md:text-sm">
+                            {pillar.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 inline-flex items-center gap-4 rounded-2xl border border-white/10 bg-black/25 px-6 py-4">
+                      <span className="text-base font-medium text-white/80">Input</span>
+                      <ArrowRight className="h-5 w-5 text-white/40" />
+                      <span className="text-base font-medium text-emerald-400">Agent</span>
+                      <ArrowRight className="h-5 w-5 text-white/40" />
+                      <span className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-4 py-1.5 text-base font-medium text-emerald-400">Human Review</span>
+                      <ArrowRight className="h-5 w-5 text-white/40" />
+                      <span className="text-base font-medium text-white/80">Output</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="grid gap-4 md:max-w-md">
+                <div className="grid gap-3 md:max-w-md">
                   {[
                     {
                       icon: ShieldCheck,
                       title: "Audit-ready",
                       desc: "Immutable logs of tool calls, inputs, outputs, and approvals.",
+                      color: "text-emerald-300",
                     },
                     {
                       icon: Workflow,
                       title: "Deterministic structure",
                       desc: "Schema-first outputs reduce surprises and make integrations stable.",
+                      color: "text-cyan-300",
                     },
                     {
                       icon: Bot,
                       title: "HITL controls",
                       desc: "Review/approve at key checkpoints—especially for sensitive actions.",
+                      color: "text-emerald-300",
                     },
                   ].map((x, i) => (
                     <div
@@ -624,10 +868,10 @@ export default function Page() {
                       className="flex gap-3 rounded-2xl border border-white/10 bg-black/25 p-4"
                     >
                       <div className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
-                        <x.icon className="h-5 w-5 text-emerald-300" />
+                        <x.icon className={`h-5 w-5 ${x.color}`} />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-emerald-300">
+                        <div className={`text-sm font-semibold ${x.color}`}>
                           {x.title}
                         </div>
                         <div className="mt-1 text-sm text-white/65">
@@ -655,14 +899,34 @@ export default function Page() {
               >
                 <div className="relative grid gap-10 md:grid-cols-2 md:items-center">
                   <div>
-                    <h2 className="text-2xl font-semibold text-emerald-300 md:text-3xl">
+                    <h2 className="text-3xl font-bold text-emerald-300 md:text-4xl">
                       Request access
                     </h2>
-                    <p className="mt-3 text-sm text-white/65 md:text-base">
-                      Tell us what you want to automate. We’ll reply with next
-                      steps (or a demo).
+                    <p className="mt-4 text-base text-white/70 md:text-lg">
+                      Tell us what you want to automate. We'll build a solution tailored to your workflow.
                     </p>
-                    <div className="mt-6 flex flex-wrap gap-4">
+
+                    <div className="mt-8 space-y-4">
+                      {[
+                        "Free consultation",
+                        "Custom automation for your use cases",
+                        "Get started in days",
+                      ].map((benefit, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <div className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-400/20">
+                            <Check className="h-4 w-4 text-emerald-400" />
+                          </div>
+                          <span className="text-sm text-white/80 md:text-base">{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <Clock className="h-5 w-5 text-emerald-400" />
+                      <span className="text-sm text-white/70">We typically respond within 24 hours</span>
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap gap-4">
                       {[
                         { icon: FileSpreadsheet, label: "OmniFin" },
                         { icon: Users, label: "OmniHR" },
@@ -679,14 +943,24 @@ export default function Page() {
                   </div>
 
                   <div className="rounded-3xl border border-white/10 bg-black/25 p-6">
-                    <div className="text-sm font-semibold text-emerald-300">
-                      Your email (optional)
+                    <div className="text-sm font-semibold text-white">
+                      Your email
                     </div>
                     <input
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@company.com"
                       className="mt-3 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none focus:border-emerald-400/50"
+                    />
+                    <div className="mt-4 text-sm font-semibold text-white">
+                      Your message
+                    </div>
+                    <textarea
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="I'd like to request access / a demo..."
+                      rows={6}
+                      className="mt-3 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none focus:border-emerald-400/50 resize-none"
                     />
                     <a
                       href={mailto}
@@ -706,18 +980,8 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 px-8 py-6 text-xs text-white/45 md:flex-row">
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/omnigence-logo.jpg"
-                    alt="Omnigence"
-                    width={22}
-                    height={22}
-                    className="rounded-lg"
-                  />
-                  <span>© {new Date().getFullYear()} Omnigence</span>
-                </div>
-                <div className="flex items-center gap-5">
+              <div className="flex flex-col items-center gap-4 border-t border-white/10 px-8 py-6 text-xs text-white/45">
+                <div className="flex flex-wrap items-center justify-center gap-5">
                   <a className="hover:text-white" href="#solutions">
                     Solutions
                   </a>
@@ -727,6 +991,38 @@ export default function Page() {
                   <a className="hover:text-white" href="#governance">
                     Governance
                   </a>
+                  <a
+                    href="https://linkedin.com/in/YOUR_PROFILE"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 transition-colors hover:text-white"
+                  >
+                    <span>Connect with us</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="url(#linkedin-gradient)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <defs>
+                        <linearGradient id="linkedin-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#54B3CA" />
+                          <stop offset="100%" stopColor="#3FBC95" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                      <rect width="4" height="12" x="2" y="9" />
+                      <circle cx="4" cy="4" r="2" />
+                    </svg>
+                  </a>
+                </div>
+                <div>
+                  <span>© {new Date().getFullYear()} Omnigence</span>
                 </div>
               </div>
             </div>
