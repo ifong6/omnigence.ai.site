@@ -47,7 +47,7 @@ const Container = ({ children, className = "" }) => (
 );
 
 const FeatureCard = ({ icon: Icon, title, desc }) => (
-  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm">
+  <div className="rounded-2xl border border-white/15 bg-white/[0.05] p-6 backdrop-blur-sm">
     <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
       <Icon className="h-5 w-5 text-emerald-300" />
     </div>
@@ -131,7 +131,7 @@ export default function OrchestratorPage() {
             </div>
 
             {/* CTA Card - Static */}
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center backdrop-blur-sm">
+            <div className="rounded-3xl border border-white/15 bg-white/[0.05] p-8 text-center backdrop-blur-sm">
               <h2 className="text-xl font-semibold text-emerald-300 mb-3">
                 Coming Soon
               </h2>

@@ -1,7 +1,11 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  fallback: ["system-ui", "sans-serif"],
+});
 
 export const metadata = {
   title: "Omnigence | AI Automation for Finance & HR",
@@ -11,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+      <body className={`${manrope.className} antialiased bg-[#fafafa] text-gray-900`}>{children}</body>
     </html>
   );
 }
