@@ -31,6 +31,16 @@ import {
   Loader2,
   PenLine,
   ExternalLink,
+  Server,
+  Cloud,
+  User,
+  Building2,
+  Lock,
+  Zap,
+  DollarSign,
+  Globe,
+  HardDrive,
+  Settings,
 } from "lucide-react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
@@ -1273,51 +1283,199 @@ const PillarAutomationVisual = () => {
 };
 
 /**
- * Security comparison: local vs cloud deployment options.
- * Static, scan-friendly decision layout with minimal chrome.
+ * Deployment comparison: 3 size-based tabs (Solo / Small Team / Enterprise),
+ * each showing a Local vs Cloud side-by-side comparison.
+ * Auto-slides every 22s, clickable tabs pause auto-play.
  */
+const DEPLOY_ROTATE_MS = 22000;
+
+const deploymentTiers = [
+  {
+    id: "solo",
+    label: "Solo",
+    badge: "1 user",
+    local: {
+      headline: "Local machine (CUDA)",
+      items: [
+        { icon: Lock, label: "You own your data — nothing leaves your device" },
+        { icon: HardDrive, label: "Runs entirely on your hardware" },
+        { icon: DollarSign, label: "Save on tokens — fixed, predictable cost" },
+      ],
+    },
+    cloud: {
+      headline: "Managed cloud",
+      items: [
+        { icon: KeyRound, label: "Zero data retention — processed and discarded" },
+        { icon: Zap, label: "Instant setup, no hardware needed" },
+        { icon: Unplug, label: "Zero maintenance overhead" },
+      ],
+    },
+  },
+  {
+    id: "team",
+    label: "Small Team",
+    badge: "2–10 users",
+    local: {
+      headline: "Hybrid (local + cloud sync)",
+      items: [
+        { icon: Lock, label: "Sensitive data stays on your machines" },
+        { icon: Settings, label: "Upgrade gradually as concurrency grows" },
+        { icon: DollarSign, label: "Local-like cost, cloud-like collaboration" },
+      ],
+    },
+    cloud: {
+      headline: "Cloud collaboration",
+      items: [
+        { icon: Users, label: "Multi-user access with approval chains" },
+        { icon: Globe, label: "Work from anywhere, real-time sync" },
+        { icon: Zap, label: "Task queues and shared workspace" },
+      ],
+    },
+  },
+  {
+    id: "enterprise",
+    label: "Enterprise",
+    badge: "10+ users",
+    local: {
+      headline: "On-prem multi-GPU server",
+      items: [
+        { icon: Building2, label: "Unified permissions and audit trail" },
+        { icon: ShieldCheck, label: "Strict internal-only data policies" },
+        { icon: DollarSign, label: "Predictable cost at scale" },
+      ],
+    },
+    cloud: {
+      headline: "Private VPC deployment",
+      items: [
+        { icon: Cloud, label: "Runs in your private cloud environment" },
+        { icon: ShieldCheck, label: "Compliance and audit-ready" },
+        { icon: Server, label: "Fully managed, elastic scaling" },
+      ],
+    },
+  },
+];
+
 const PillarSecurityVisual = () => {
-  const columns = [
-    {
-      title: "Local",
-      items: [
-        { icon: ShieldCheck, label: "You own your data" },
-        { icon: Layers, label: "Runs on your machine" },
-        { icon: Wallet, label: "No token usage or ongoing cost" },
-      ],
-    },
-    {
-      title: "Cloud / VPC",
-      items: [
-        { icon: KeyRound, label: "Zero data retention" },
-        { icon: Unplug, label: "No infrastructure overhead" },
-        { icon: ShieldCheck, label: "Fully managed deployment" },
-      ],
-    },
-  ];
+  const [activeTab, setActiveTab] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!autoPlay) return;
+    const id = window.setInterval(() => {
+      setActiveTab((prev) => (prev + 1) % deploymentTiers.length);
+    }, DEPLOY_ROTATE_MS);
+    return () => window.clearInterval(id);
+  }, [autoPlay]);
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+    setAutoPlay(false);
+    // Resume auto-play after 60s of inactivity
+    setTimeout(() => setAutoPlay(true), 60000);
+  };
+
+  const tier = deploymentTiers[activeTab];
 
   return (
-    <div className="pillar-content-card w-full max-w-[640px] mx-auto p-6 sm:p-8" role="img" aria-label="Comparison of local and cloud or VPC deployment options">
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10">
-        {columns.map((column, idx) => (
-          <div
-            key={column.title}
-            className={idx === 1 ? "sm:border-l sm:border-gray-200 sm:pl-10" : "sm:pr-2"}
-          >
-            <h4 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-gray-900">
-              {column.title}
-            </h4>
-            <ul className="mt-4 space-y-3.5">
-              {column.items.map((item) => (
+    <div
+      className="pillar-content-card w-full max-w-[680px] mx-auto p-5 sm:p-7"
+      role="region"
+      aria-label="Deployment options by team size"
+    >
+      {/* Size tabs */}
+      <div className="flex gap-2 mb-6 justify-center" role="tablist" aria-label="Team size">
+        {deploymentTiers.map((t, i) => {
+          const active = activeTab === i;
+          return (
+            <button
+              key={t.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => handleTabClick(i)}
+              className={`relative flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold transition-all duration-300 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2B5BC8]/40 ${
+                active
+                  ? "bg-[#2B5BC8] text-white shadow-md"
+                  : "bg-white/70 text-gray-600 hover:bg-white hover:text-gray-900 border border-gray-200/60"
+              }`}
+            >
+              {t.label}
+              <span
+                className={`text-[11px] font-medium ${
+                  active ? "text-white/75" : "text-gray-400"
+                }`}
+              >
+                {t.badge}
+              </span>
+              {/* Progress indicator for auto-play */}
+              {active && autoPlay && !reduceMotion && (
+                <motion.span
+                  className="absolute bottom-0 left-[10%] h-[2px] rounded-full bg-white/50"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "80%" }}
+                  transition={{ duration: DEPLOY_ROTATE_MS / 1000, ease: "linear" }}
+                  key={`progress-${activeTab}`}
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Local vs Cloud comparison */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={tier.id}
+          initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduceMotion ? {} : { opacity: 0, y: -6 }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-0"
+        >
+          {/* Local column */}
+          <div className="sm:pr-6 sm:border-r sm:border-gray-200/70">
+            <div className="flex items-center gap-2 mb-1">
+              <Server className="h-4 w-4 text-[#2B5BC8]" aria-hidden />
+              <h4 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#2B5BC8]">
+                Local
+              </h4>
+            </div>
+            <p className="text-[12px] text-gray-400 mb-3.5">{tier.local.headline}</p>
+            <ul className="space-y-3">
+              {tier.local.items.map((item) => (
                 <li key={item.label} className="flex items-start gap-2.5">
                   <item.icon className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" aria-hidden />
-                  <span className="text-[14px] leading-[1.45] text-gray-700">{item.label}</span>
+                  <span className="text-[13.5px] leading-[1.45] text-gray-700">
+                    {item.label}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
-        ))}
-      </div>
+
+          {/* Cloud column */}
+          <div className="sm:pl-6">
+            <div className="flex items-center gap-2 mb-1">
+              <Cloud className="h-4 w-4 text-[#54B3CA]" aria-hidden />
+              <h4 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#54B3CA]">
+                Cloud
+              </h4>
+            </div>
+            <p className="text-[12px] text-gray-400 mb-3.5">{tier.cloud.headline}</p>
+            <ul className="space-y-3">
+              {tier.cloud.items.map((item) => (
+                <li key={item.label} className="flex items-start gap-2.5">
+                  <item.icon className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" aria-hidden />
+                  <span className="text-[13.5px] leading-[1.45] text-gray-700">
+                    {item.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
@@ -1337,8 +1495,8 @@ const pillarPanelCopy = {
     Visual: PillarAutomationVisual,
   },
   security: {
-    headline: "You control your data",
-    sub: "Choose how your system runs. Your data stays where you decide.",
+    headline: "Deployment that caters to your needs",
+    sub: "Choose how your system runs — by team size, compliance needs, and budget.",
     Visual: PillarSecurityVisual,
   },
 };
@@ -2229,14 +2387,14 @@ export default function Page() {
         <div className="hidden lg:block">
           <div className="relative mx-auto w-full max-w-[1510px] h-[832px]">
             {/* Left headline + CTA — aligned with navbar via calc */}
-            <div className="absolute left-[max(calc((100%-1280px)/2+24px),24px)] top-1/2 -translate-y-[55%] z-10 max-w-[400px]">
+            <div className="absolute left-[max(calc((100%-1280px)/2+24px),24px)] top-1/2 -translate-y-[55%] z-10 max-w-[450px]">
               <motion.h1
                 className="font-medium text-[42px] leading-[1.1] tracking-[-0.02em] text-[#0e0c0c]"
                 initial={heroTextEnter}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.02, ease: heroEase }}
               >
-                An AI agent you can train to run your operations
+                Specialized AI Agents<br />for SMB Day-to-Day Work
               </motion.h1>
               <motion.p
                 className="mt-6 text-[16px] leading-[1.6] text-[#0e0c0c]/60 max-w-[340px]"
@@ -2482,7 +2640,7 @@ export default function Page() {
         <div className="relative px-6 pb-16 lg:hidden">
           <div className="relative mx-auto max-w-[520px] pt-24 pb-8">
             <h1 className="text-[40px] font-semibold leading-[1.05] tracking-[-0.04em] text-gray-900">
-              An AI agent you can train to run your operations
+              Specialized AI Agents<br />for SMB Day-to-Day Work
             </h1>
             <p className="mt-6 text-[16px] leading-[1.7] text-[#6B7280]">
               Turn documents, approvals, and company knowledge into automated workflows.
