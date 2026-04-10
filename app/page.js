@@ -2202,6 +2202,9 @@ const Nav = () => {
             <a href="#governance" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               Security
             </a>
+            <a href="#deployment" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
+              Deployment
+            </a>
           </div>
 
           <div className="flex items-center justify-self-end">
@@ -2316,7 +2319,7 @@ const SiteFooter = () => (
             <span className="text-base font-semibold text-gray-900">Omnigence</span>
           </div>
           <p className="mt-4 text-[14px] leading-relaxed text-gray-500">
-            Move faster without losing control. The AI agent you train to run your operations.
+            Move faster with control. Put AI agents to work for your business.
           </p>
         </div>
 
@@ -2449,7 +2452,7 @@ export default function Page() {
             {/* Left */}
             <div className="max-w-[440px]">
               <h1 className="font-bold text-[48px] leading-[1.03] tracking-[-0.03em] text-gray-900 sm:text-[56px] lg:text-[64px]">
-                Specialized AI Agents for Day-to-Day SMB Work
+                Specialized SMB AI Agents for Day-to-Day Tasks
               </h1>
               <p className="mt-6 text-[16px] leading-[24px] text-[#6B7280]">
                 Turn documents, approvals, and company knowledge into automated workflows.
@@ -2656,7 +2659,7 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.02, ease: heroEase }}
               >
-                Specialized AI Agents for Day-to-Day SMB Work
+                Specialized SMB AI Agents for Day-to-Day Tasks
               </motion.h1>
               <motion.p
                 className="relative z-[1] mt-6 text-[16px] leading-[1.6] text-[#0e0c0c]/60 max-w-[340px]"
@@ -2889,7 +2892,7 @@ export default function Page() {
         <div className="relative px-6 pb-16 lg:hidden">
           <div className="relative mx-auto max-w-[520px] pt-24 pb-8">
             <h1 className="text-[40px] font-bold leading-[1.05] tracking-[-0.04em] text-gray-900">
-              Specialized AI Agents for Day-to-Day SMB Work
+              Specialized SMB AI Agents for Day-to-Day Tasks
             </h1>
             <p className="mt-6 text-[16px] leading-[1.7] text-[#6B7280]">
               Turn documents, approvals, and company knowledge into automated workflows.
