@@ -162,65 +162,6 @@ const MultiAgentIcon = ({ className = "" }) => (
 );
 
 
-const HERO_LEFT_GRID = "https://www.figma.com/api/mcp/asset/7dbad0a3-3458-47bd-b02f-d81883bb6c03";
-
-const HeroHeadlineWave = () => {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      className="pointer-events-none absolute -left-[185px] top-[430px] h-[390px] w-[520px] opacity-[0.24]"
-      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-      animate={reduceMotion ? { opacity: 0.24 } : { opacity: 0.24, y: [0, -4, 0] }}
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { opacity: { duration: 0.6 }, y: { duration: 13, repeat: Infinity, ease: "easeInOut" } }
-      }
-      aria-hidden
-    >
-      <motion.img
-        src={HERO_LEFT_GRID}
-        alt=""
-        className="absolute inset-0 h-full w-full object-contain blur-[0.6px]"
-        animate={reduceMotion ? undefined : { x: [0, 8, -3, 0], y: [0, -5, 0], rotate: [0, 0.35, 0] }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 16, repeat: Infinity, ease: "easeInOut" }}
-      />
-    </motion.div>
-  );
-};
-
-const HeroHeadlineWaveTail = () => {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      className="pointer-events-none absolute -left-[185px] -top-[78px] hidden h-[300px] w-[520px] opacity-[0.16] lg:block"
-      initial={reduceMotion ? false : { opacity: 0 }}
-      animate={reduceMotion ? { opacity: 0.16 } : { opacity: 0.16, y: [0, -3, 0] }}
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { opacity: { duration: 0.6 }, y: { duration: 13, repeat: Infinity, ease: "easeInOut" } }
-      }
-      style={{
-        maskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.28) 18%, rgba(0,0,0,0.14) 42%, rgba(0,0,0,0.06) 68%, rgba(0,0,0,0) 100%)",
-        WebkitMaskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.28) 18%, rgba(0,0,0,0.14) 42%, rgba(0,0,0,0.06) 68%, rgba(0,0,0,0) 100%)",
-      }}
-      aria-hidden
-    >
-      <motion.img
-        src={HERO_LEFT_GRID}
-        alt=""
-        className="absolute inset-0 h-full w-full object-contain blur-[0.6px]"
-        animate={reduceMotion ? undefined : { x: [0, 8, -3, 0], y: [0, -5, 0], rotate: [0, 0.35, 0] }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 16, repeat: Infinity, ease: "easeInOut" }}
-      />
-    </motion.div>
-  );
-};
 
 const btnBase = "inline-flex items-center justify-center gap-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6362CD]/50 focus-visible:ring-offset-2";
 
@@ -2287,7 +2228,6 @@ const HERO_FINANCE_METRICS = {
   expenses: 28340,
   profit: 14240,
 };
-const HERO_PANEL_TEXTURE = "https://www.figma.com/api/mcp/asset/5d172ce2-9311-475e-9dd3-15fb0d666dc5";
 
 const useCountUp = ({ target, durationMs, start }) => {
   const [value, setValue] = useState(start ? 0 : target);
@@ -2509,7 +2449,7 @@ export default function Page() {
             {/* Left */}
             <div className="max-w-[440px]">
               <h1 className="font-bold text-[48px] leading-[1.03] tracking-[-0.03em] text-gray-900 sm:text-[56px] lg:text-[64px]">
-                An AI agent you can train to run your operations
+                Specialized AI Agents for Day-to-Day SMB Work
               </h1>
               <p className="mt-6 text-[16px] leading-[24px] text-[#6B7280]">
                 Turn documents, approvals, and company knowledge into automated workflows.
@@ -2543,15 +2483,6 @@ export default function Page() {
                       "radial-gradient(240px 240px at 94% 11%, rgba(21,93,252,0.52) 0%, rgba(47,110,249,0.42) 18%, rgba(74,127,245,0.30) 34%, rgba(58,69,220,0.16) 56%, rgba(98,103,223,0.10) 66%, rgba(138,138,225,0.06) 74%, rgba(0,0,0,0) 92%), linear-gradient(137.33937931403239deg, rgb(230, 225, 236) 25%, rgba(111, 115, 175, 0.6) 45%, rgb(123, 143, 212) 70%, rgb(59, 79, 184) 100%)",
                   }}
                 >
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                    style={{
-                      backgroundImage: `url("${HERO_PANEL_TEXTURE}")`,
-                      backgroundSize: "220px 220px",
-                      mixBlendMode: "soft-light",
-                    }}
-                    aria-hidden
-                  />
                   <div
                     className="pointer-events-none absolute inset-0"
                     style={{
@@ -2725,7 +2656,7 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.02, ease: heroEase }}
               >
-                An AI agent you can train to run your operations
+                Specialized AI Agents for Day-to-Day SMB Work
               </motion.h1>
               <motion.p
                 className="relative z-[1] mt-6 text-[16px] leading-[1.6] text-[#0e0c0c]/60 max-w-[340px]"
@@ -2756,7 +2687,6 @@ export default function Page() {
                   Explore API <ArrowRight className="h-4 w-4" />
                 </Btn>
               </motion.div>
-              <HeroHeadlineWave />
             </div>
 
             {/* Gradient panel — height 750px so 82 + 750 = 832px; avoids overflow clip / angled edge at section bottom */}
@@ -2770,15 +2700,6 @@ export default function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.22, ease: heroEase }}
             >
-              <div
-                className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage: `url("${HERO_PANEL_TEXTURE}")`,
-                  backgroundSize: "220px 220px",
-                  mixBlendMode: "soft-light",
-                }}
-                aria-hidden
-              />
               <div
                 className="pointer-events-none absolute inset-0"
                 style={{
@@ -2968,7 +2889,7 @@ export default function Page() {
         <div className="relative px-6 pb-16 lg:hidden">
           <div className="relative mx-auto max-w-[520px] pt-24 pb-8">
             <h1 className="text-[40px] font-bold leading-[1.05] tracking-[-0.04em] text-gray-900">
-              An AI agent you can train to run your operations
+              Specialized AI Agents for Day-to-Day SMB Work
             </h1>
             <p className="mt-6 text-[16px] leading-[1.7] text-[#6B7280]">
               Turn documents, approvals, and company knowledge into automated workflows.
@@ -2997,7 +2918,6 @@ export default function Page() {
 
       {/* Problem → Solution */}
       <section id="problem" className="relative py-20 md:py-24 lg:py-28 bg-[#fafafa]">
-        <HeroHeadlineWaveTail />
         <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-6">
           <h2 className="sr-only">Operations overview</h2>
           {/* Section intro — single paragraph; browser wraps naturally within max-width */}
