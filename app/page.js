@@ -166,10 +166,10 @@ const MultiAgentIcon = ({ className = "" }) => (
 const btnBase = "inline-flex items-center justify-center gap-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6362CD]/50 focus-visible:ring-offset-2";
 
 const btnVariants = {
-  primary: `${btnBase} h-[38px] rounded-full bg-[#6362CD] px-5 text-white hover:bg-[#807FD9]`,
+  primary: `${btnBase} h-[38px] rounded-full bg-[#6362CD] px-5 text-white hover:bg-[#7868E6]`,
   secondary: `${btnBase} h-[38px] rounded-full border border-gray-300 bg-transparent px-5 text-gray-800 hover:border-gray-400 hover:bg-gray-50`,
   ghost: `${btnBase} text-[#6362CD] hover:underline underline-offset-4 decoration-[#6362CD]/40`,
-  navPrimary: `${btnBase} h-[46px] rounded-full bg-[#6362CD] px-5 text-white hover:bg-[#807FD9]`,
+  navPrimary: `${btnBase} h-[46px] rounded-full bg-[#6362CD] px-5 text-white hover:bg-[#7868E6]`,
 };
 
 const Btn = ({ variant = "primary", href, children, className = "", ...props }) => {
@@ -723,8 +723,8 @@ const HowItWorks = () => {
       className="relative overflow-hidden bg-white py-24 md:py-28 lg:py-32"
     >
       <div className="mx-auto w-full max-w-[1280px] px-6">
-        <div className="text-left mb-16 md:mb-20">
-          <span className="text-[14px] font-semibold uppercase tracking-[0.1em] text-[#6362CD]">How it works</span>
+        <div className="text-center mb-16 md:mb-20">
+          <span className="text-[20px] font-bold uppercase tracking-[0.1em] text-[#6362CD]">How it works</span>
         </div>
 
       {/* Step 1 — text left, visual right */}
@@ -1544,7 +1544,7 @@ const pillarPanelCopy = {
     Visual: PillarAutomationVisual,
   },
   security: {
-    headline: "You control your data",
+    headline: <>You <span className="text-[#6362CD]">control</span> your data</>,
     sub: "Choose how your system runs. Your data stays where you decide.",
     Visual: PillarSecurityVisual,
   },
@@ -1641,7 +1641,7 @@ const WhoItsForSection = () => {
                 whileTap={reduceMotion ? undefined : { scale: 0.98 }}
                 className={`relative inline-flex items-center justify-center rounded-full px-5 py-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6362CD]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-white transition-colors ${
                   active
-                    ? "bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-black/[0.08] ring-1 ring-[#6362CD]/15"
+                    ? "bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)] border-2 border-[#6362CD]"
                     : "bg-transparent border border-[rgba(0,0,0,0.08)] hover:bg-gray-50"
                 }`}
               >
@@ -2034,73 +2034,6 @@ const FAQ_ITEMS = [
   },
 ];
 
-const SECURITY_DATA = {
-  local: [
-    { icon: Database, label: "You own your data", description: "Keep data inside your environment, under your policies and control." },
-    { icon: Coins, label: "Save tokens", description: "Run locally to avoid ongoing token usage and recurring cost." },
-    { icon: Layers, label: "Runs on your machine", description: "Deploy close to your team and systems in a self-contained setup." },
-  ],
-  cloud: [
-    { icon: ShieldCheck, label: "Zero data retention", description: "Process data without storing it after the work is done." },
-    { icon: Cloud, label: "No overhead", description: "Skip the setup, scaling, and maintenance work of managing infrastructure." },
-    { icon: KeyRound, label: "Fully managed deployment", description: "Run in the cloud or your VPC with managed operations already in place." },
-  ],
-};
-
-const SecurityTabs = ({ reduceMotion }) => {
-  const [activeTab, setActiveTab] = useState("local");
-  const items = SECURITY_DATA[activeTab];
-
-  return (
-    <div className="mx-auto mt-8 max-w-[760px]">
-      {/* Tab switcher */}
-      <div className="flex justify-center">
-        <div className="inline-flex rounded-full border border-gray-200 bg-gray-50 p-1">
-          {["local", "cloud"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`relative rounded-full px-6 py-2 text-[13px] font-semibold uppercase tracking-[0.06em] transition-all duration-200 ${
-                activeTab === tab
-                  ? "bg-[#6362CD] text-white shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-[0_16px_50px_rgba(43,91,200,0.08)]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: reduceMotion ? 0 : 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-            className="space-y-6"
-          >
-            {items.map((item) => (
-              <div key={item.label} className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#6362CD]/10">
-                  <item.icon className="h-[18px] w-[18px] text-[#6362CD]" strokeWidth={1.8} />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[15px] font-semibold leading-[1.35] text-[#111827]">{item.label}</p>
-                  <p className="mt-1 text-[13.5px] leading-[1.6] text-[#6B7280]">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-};
-
 const FaqSection = () => {
   const [openIndex, setOpenIndex] = useState(-1);
 
@@ -2168,6 +2101,7 @@ const FaqSection = () => {
 
 const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
@@ -2186,7 +2120,7 @@ const Nav = () => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="grid grid-cols-3 items-center py-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 items-center py-3">
           <a href="#top" className="flex items-center gap-2 justify-self-start">
             <OmnigenceLogo size={40} decorative />
             <span className="text-sm font-semibold tracking-wide text-gray-900">Omnigence</span>
@@ -2199,23 +2133,51 @@ const Nav = () => {
             <a href="#how" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               How it works
             </a>
-            <a href="#governance" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
-              Security
-            </a>
             <a href="#deployment" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               Deployment
             </a>
           </div>
 
-          <div className="flex items-center justify-self-end">
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center justify-self-end">
             <span className="nav-cta-glow inline-flex">
               <Btn variant="navPrimary" href="#contact" className="relative z-[1]">
                 Request a Demo
               </Btn>
             </span>
           </div>
+
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            className="md:hidden flex items-center justify-self-end p-2 text-gray-700"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-md px-6 pb-5 pt-3">
+          <div className="flex flex-col gap-4">
+            <a href="#product" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
+              Product
+            </a>
+            <a href="#how" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
+              How it works
+            </a>
+            <a href="#deployment" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
+              Deployment
+            </a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
+              Request a Demo
+            </a>
+          </div>
+        </div>
+      )}
     </motion.nav>
   );
 };
@@ -2445,7 +2407,7 @@ export default function Page() {
       <Nav />
 
       {/* Hero — full viewport like Vercel */}
-      <section className="relative min-h-screen bg-[#fafafa] overflow-hidden pt-20 md:pt-24 lg:pt-28 pb-20 md:pb-24 lg:pb-28">
+      <section className="relative min-h-screen bg-[#fafafa] overflow-hidden pt-12 md:pt-14 lg:pt-16 pb-12 md:pb-14 lg:pb-16">
         {/* Hero grid (Figma-accurate) - disabled; use legacy pixel-accurate block below */}
         <div className="hidden relative z-10 mx-auto max-w-[1510px] px-6 lg:px-[80px] h-full flex items-center">
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-[44px]">
@@ -2455,12 +2417,12 @@ export default function Page() {
                 Specialized SMB AI Agents for Day-to-Day Tasks
               </h1>
               <p className="mt-6 text-[16px] leading-[24px] text-[#6B7280]">
-                Turn documents, approvals, and company knowledge into automated workflows.
+                Turn documents, approvals, and business domain into automated workflows.
               </p>
               <div className="mt-8 flex items-center gap-3">
                 <a
                   href="#how"
-                  className="inline-flex box-border h-[46px] w-[240px] items-center justify-center gap-2 rounded-full bg-[#6362CD] px-5 py-0 text-sm font-medium leading-none text-white hover:bg-[#807FD9] transition-colors"
+                  className="inline-flex box-border h-[46px] w-[240px] items-center justify-center gap-2 rounded-full bg-[#6362CD] px-5 py-0 text-sm font-medium leading-none text-white hover:bg-[#7868E6] transition-colors"
                 >
                   See How It Works <ArrowRight className="h-4 w-4" />
                 </a>
@@ -2483,7 +2445,7 @@ export default function Page() {
                     width: 879,
                     height: 810,
                     backgroundImage:
-                      "radial-gradient(240px 240px at 94% 11%, rgba(155,142,199,0.35) 0%, rgba(189,166,206,0.28) 18%, rgba(180,211,217,0.22) 34%, rgba(155,142,199,0.12) 56%, rgba(189,166,206,0.08) 66%, rgba(242,234,224,0.05) 74%, rgba(0,0,0,0) 92%), linear-gradient(137deg, #F2EAE0 25%, #B4D3D9 45%, #BDA6CE 70%, #9B8EC7 100%)",
+                      "radial-gradient(240px 240px at 94% 11%, rgba(21,93,252,0.52) 0%, rgba(47,110,249,0.42) 18%, rgba(74,127,245,0.30) 34%, rgba(58,69,220,0.16) 56%, rgba(98,103,223,0.10) 66%, rgba(138,138,225,0.06) 74%, rgba(0,0,0,0) 92%), linear-gradient(137.33937931403239deg, rgb(230, 225, 236) 25%, rgba(111, 115, 175, 0.6) 45%, rgb(123, 143, 212) 70%, rgb(59, 79, 184) 100%)",
                   }}
                 >
                   <div
@@ -2513,22 +2475,22 @@ export default function Page() {
                     }}
                   />
                   {/* Upload */}
-                  <div className="absolute left-[104px] top-[110px] w-[220px] h-[68px] bg-[#B4D3D9] rounded-[16px] shadow-[0_10px_15px_rgba(0,0,0,0.06),0_4px_6px_rgba(0,0,0,0.04)] flex items-center justify-center px-[24px]">
-                    <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal] text-center">
-                      Upload Files
+                  <div className="absolute left-[104px] top-[110px] w-[220px] h-[68px] bg-[#B8B5FF] rounded-[16px] shadow-[0_10px_15px_rgba(0,0,0,0.06),0_4px_6px_rgba(0,0,0,0.04)] flex items-center justify-center px-[24px]">
+                    <p className="text-[14px] font-medium text-white leading-[normal] text-center">
+                      Business Data
                     </p>
                   </div>
 
-                  {/* Structured Business Data */}
-                  <div className="absolute left-[104px] top-[192px] w-[220px] h-[68px] bg-[#BDA6CE] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.08),0_4px_8px_rgba(0,0,0,0.04)] flex items-center justify-center px-[24px]">
-                    <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal] text-center">
-                      Structured Business Data
+                  {/* Structured Templates */}
+                  <div className="absolute left-[104px] top-[192px] w-[220px] h-[68px] bg-[#7868E6] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.14),0_4px_8px_rgba(0,0,0,0.1)] flex items-center justify-center px-[24px]">
+                    <p className="text-[14px] font-medium text-white leading-[normal] text-center">
+                      Structured Templates
                     </p>
                   </div>
 
                   {/* Arrow icon between cards */}
                   <div
-                    className="absolute left-[194px] top-[163px] z-20 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white text-[#0e0c0c] shadow-[0_8px_14px_rgba(0,0,0,0.18)]"
+                    className="absolute left-[194px] top-[163px] z-20 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white text-[#25343F] shadow-[0_8px_14px_rgba(0,0,0,0.18)]"
                     aria-hidden
                   >
                     <ArrowDown className="h-5 w-5" strokeWidth={1.9} />
@@ -2575,7 +2537,7 @@ export default function Page() {
                     <div className="mt-[10px] flex gap-[10px]">
                       <button
                         type="button"
-                        className="flex-1 h-[26px] rounded-[6px] bg-[#6362CD] text-white text-[10px] font-medium"
+                        className="flex-1 h-[26px] rounded-[6px] bg-[#2FA084] text-white text-[10px] font-medium"
                       >
                         Approve
                       </button>
@@ -2667,7 +2629,7 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.48, delay: 0.1, ease: heroEase }}
               >
-                Turn documents, approvals, and company knowledge into automated workflows.
+                Turn documents, approvals, and business domain into automated workflows.
               </motion.p>
               <motion.div
                 className="relative z-[1] mt-10 flex items-center gap-3"
@@ -2694,10 +2656,10 @@ export default function Page() {
 
             {/* Gradient panel — height 750px so 82 + 750 = 832px; avoids overflow clip / angled edge at section bottom */}
             <motion.div
-              className="absolute left-[633px] top-[82px] w-[879px] h-[750px] rounded-[28px] overflow-hidden"
+              className="absolute left-[633px] top-[62px] w-[879px] h-[750px] rounded-[28px] overflow-hidden"
               style={{
                 backgroundImage:
-                  "radial-gradient(240px 240px at 94% 11%, rgba(155,142,199,0.35) 0%, rgba(189,166,206,0.28) 18%, rgba(180,211,217,0.22) 34%, rgba(155,142,199,0.12) 56%, rgba(189,166,206,0.08) 66%, rgba(242,234,224,0.05) 74%, rgba(0,0,0,0) 92%), linear-gradient(137deg, #F2EAE0 25%, #B4D3D9 45%, #BDA6CE 70%, #9B8EC7 100%)",
+                  "radial-gradient(240px 240px at 94% 11%, rgba(21,93,252,0.52) 0%, rgba(47,110,249,0.42) 18%, rgba(74,127,245,0.30) 34%, rgba(58,69,220,0.16) 56%, rgba(98,103,223,0.10) 66%, rgba(138,138,225,0.06) 74%, rgba(0,0,0,0) 92%), linear-gradient(137.33937931403239deg, rgb(230, 225, 236) 25%, rgba(111, 115, 175, 0.6) 45%, rgb(123, 143, 212) 70%, rgb(59, 79, 184) 100%)",
               }}
               initial={heroVisualEnter}
               animate={{ opacity: 1, y: 0 }}
@@ -2730,29 +2692,29 @@ export default function Page() {
 
             {/* Upload / structured buttons */}
             <motion.div
-              className="absolute left-[836px] top-[278px] w-[220px] h-[68px] bg-[#B4D3D9] rounded-[16px] shadow-[0_10px_15px_rgba(0,0,0,0.06),0_4px_6px_rgba(0,0,0,0.04)] flex items-center justify-center text-center px-[24px]"
+              className="absolute left-[836px] top-[258px] w-[220px] h-[68px] bg-[#B8B5FF] rounded-[16px] shadow-[0_10px_15px_rgba(0,0,0,0.06),0_4px_6px_rgba(0,0,0,0.04)] flex items-center justify-center text-center px-[24px]"
               initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.42, delay: 0.28, ease: heroEase }}
             >
-              <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal]">
-                Upload Files
+              <p className="text-[14px] font-medium text-white leading-[normal]">
+                Business Data
               </p>
             </motion.div>
 
             <motion.div
-              className="absolute left-[836px] top-[360px] w-[220px] h-[68px] bg-[#BDA6CE] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.08),0_4px_8px_rgba(0,0,0,0.04)] flex items-center justify-center text-center px-[24px]"
+              className="absolute left-[836px] top-[340px] w-[220px] h-[68px] bg-[#7868E6] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.14),0_4px_8px_rgba(0,0,0,0.1)] flex items-center justify-center text-center px-[24px]"
               initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.42, delay: 0.48, ease: heroEase }}
             >
-              <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal]">
-                Structured Business Data
+              <p className="text-[14px] font-medium text-white leading-[normal]">
+                Structured Templates
               </p>
             </motion.div>
 
             <motion.div
-              className="absolute left-[931px] top-[336px] z-20 flex h-[31px] w-[31px] items-center justify-center rounded-full bg-white text-[#0e0c0c] shadow-[0_8px_14px_rgba(0,0,0,0.18)]"
+              className="absolute left-[931px] top-[316px] z-20 flex h-[31px] w-[31px] items-center justify-center rounded-full bg-white text-[#25343F] shadow-[0_8px_14px_rgba(0,0,0,0.18)]"
               initial={reduceMotion ? false : { opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.28, delay: 0.58, ease: heroEase }}
@@ -2761,28 +2723,29 @@ export default function Page() {
               <ArrowDown className="h-4 w-4" strokeWidth={1.9} />
             </motion.div>
 
+            {/* Intelligent Historical Search card */}
             <motion.div
-              className="absolute left-[1082px] top-[210px] w-[317px] h-[77px] bg-white rounded-[13px] shadow-[0px_3px_11px_rgba(0,0,0,0.08)] flex items-center justify-center px-[14px] gap-[12px]"
+              className="absolute left-[1082px] top-[190px] w-[317px] h-[77px] bg-white rounded-[13px] shadow-[0px_3px_11px_rgba(0,0,0,0.08)] flex items-center justify-center px-[14px] gap-[12px]"
               initial={reduceMotion ? false : { opacity: 0, x: -16, scale: 0.985 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.42, delay: 0.74, ease: heroEase }}
             >
-              <AlertTriangle className="h-10 w-10 shrink-0 text-amber-500" strokeWidth={1.75} aria-hidden />
+              <ScanSearch className="h-10 w-10 shrink-0 text-[#6362CD]" strokeWidth={1.75} aria-hidden />
               <div className="flex-1">
                 <div className="text-[15px] font-medium text-[#343744] leading-[20px]">
-                  2 discrepancies flagged
+                  Intelligent Historical Search
                 </div>
                 <div className="mt-[4px] text-[10px] font-normal text-[#696969] leading-[12px]">
-                  Bankbook and statement mismatch detected
+                  Query past records with natural language
                 </div>
                 <div className="mt-[6px] text-[8px] font-normal text-[#6362CD]">
-                  Review Discrepancies &rarr;
+                  Search Records &rarr;
                 </div>
               </div>
             </motion.div>
 
             <motion.div
-              className="absolute left-[743px] top-[451px] w-[313px] h-[200px] bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_10px_15px_rgba(0,0,0,0.1),0px_4px_6px_rgba(0,0,0,0.1)] p-[18px]"
+              className="absolute left-[743px] top-[431px] w-[313px] h-[200px] bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_10px_15px_rgba(0,0,0,0.1),0px_4px_6px_rgba(0,0,0,0.1)] p-[18px]"
               initial={reduceMotion ? false : { opacity: 0, x: 18, scale: 0.985 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.46, delay: 0.94, ease: heroEase }}
@@ -2812,7 +2775,7 @@ export default function Page() {
               <div className="mt-[10px] flex gap-[10px]">
                 <button
                   type="button"
-                  className="flex-1 h-[26px] rounded-[6px] bg-[#009966] text-white text-[10px] font-medium"
+                  className="flex-1 h-[26px] rounded-[6px] bg-[#2FA084] text-white text-[10px] font-medium"
                 >
                   Approve
                 </button>
@@ -2825,8 +2788,29 @@ export default function Page() {
               </div>
             </motion.div>
 
+            {/* Discrepancy card (below approval) */}
             <motion.div
-              className="absolute left-[1082px] top-[322px] w-[318px] h-[384px] bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_10px_15px_rgba(0,0,0,0.1),0px_4px_6px_rgba(0,0,0,0.1)] p-[19px] flex flex-col gap-[12px]"
+              className="absolute left-[743px] top-[650px] w-[317px] h-[77px] bg-white rounded-[13px] shadow-[0px_3px_11px_rgba(0,0,0,0.08)] flex items-center px-[14px] gap-[12px]"
+              initial={reduceMotion ? false : { opacity: 0, y: 14, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.42, delay: 1.06, ease: heroEase }}
+            >
+              <AlertTriangle className="h-10 w-10 shrink-0 text-amber-500" strokeWidth={1.75} aria-hidden />
+              <div className="flex-1">
+                <div className="text-[15px] font-medium text-[#343744] leading-[20px]">
+                  2 discrepancies flagged
+                </div>
+                <div className="mt-[4px] text-[10px] font-normal text-[#696969] leading-[12px]">
+                  Bankbook and statement mismatch detected
+                </div>
+                <div className="mt-[6px] text-[8px] font-normal text-[#6362CD]">
+                  Review Discrepancies &rarr;
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="absolute left-[1082px] top-[302px] w-[318px] h-[384px] bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_10px_15px_rgba(0,0,0,0.1),0px_4px_6px_rgba(0,0,0,0.1)] p-[19px] flex flex-col gap-[12px]"
               initial={reduceMotion ? false : { opacity: 0, y: 22, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.52, delay: 1.18, ease: heroEase }}
@@ -2895,23 +2879,97 @@ export default function Page() {
               Specialized SMB AI Agents for Day-to-Day Tasks
             </h1>
             <p className="mt-6 text-[16px] leading-[1.7] text-[#6B7280]">
-              Turn documents, approvals, and company knowledge into automated workflows.
+              Turn documents, approvals, and business domain into automated workflows.
             </p>
             <div className="mt-10 flex items-center gap-3">
               <Btn
                 href="#how"
                 variant="primary"
-                className="box-border h-[46px] w-[240px] px-5 bg-[#6362CD] whitespace-nowrap leading-none"
+                className="box-border h-[46px] w-[160px] px-5 bg-[#6362CD] whitespace-nowrap leading-none"
               >
                 See How It Works
               </Btn>
               <Btn
                 href="/api"
                 variant="secondary"
-                className="box-border h-[46px] w-[240px] px-5 whitespace-nowrap leading-none"
+                className="box-border h-[46px] w-[160px] px-5 whitespace-nowrap leading-none"
               >
                 Explore API
               </Btn>
+            </div>
+
+            {/* Mobile hero cards */}
+            <div className="relative mx-auto mt-10 w-full max-w-[520px] h-[452px] rounded-[22px] overflow-hidden"
+              style={{
+                backgroundImage:
+                  "radial-gradient(240px 240px at 94% 11%, rgba(21,93,252,0.52) 0%, rgba(47,110,249,0.42) 18%, rgba(74,127,245,0.30) 34%, rgba(58,69,220,0.16) 56%, rgba(98,103,223,0.10) 66%, rgba(138,138,225,0.06) 74%, rgba(0,0,0,0) 92%), linear-gradient(137deg, rgb(230, 225, 236) 25%, rgba(111, 115, 175, 0.6) 45%, rgb(123, 143, 212) 70%, rgb(59, 79, 184) 100%)",
+              }}
+            >
+              {/* Business Data */}
+              <div className="absolute left-[24px] top-[28px] w-[180px] h-[56px] bg-[#B8B5FF] rounded-[14px] shadow-[0_6px_12px_rgba(0,0,0,0.06)] flex items-center justify-center px-[16px]">
+                <p className="text-[13px] font-medium text-white text-center">Business Data</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="absolute left-[88px] top-[72px] z-20 flex h-[28px] w-[28px] items-center justify-center rounded-full bg-white text-[#25343F] shadow-[0_4px_10px_rgba(0,0,0,0.14)]" aria-hidden>
+                <ArrowDown className="h-3.5 w-3.5" strokeWidth={1.9} />
+              </div>
+
+              {/* Structured Templates */}
+              <div className="absolute left-[24px] top-[94px] w-[180px] h-[56px] bg-[#7868E6] rounded-[14px] shadow-[0_8px_14px_rgba(0,0,0,0.1)] flex items-center justify-center px-[16px]">
+                <p className="text-[13px] font-medium text-white text-center">Structured Templates</p>
+              </div>
+
+              {/* Intelligent Historical Search card */}
+              <div className="absolute right-[20px] top-[24px] w-[240px] h-[62px] bg-white rounded-[12px] shadow-[0_6px_20px_rgba(0,0,0,0.07)] flex items-center px-[12px] gap-[10px]">
+                <ScanSearch className="h-7 w-7 shrink-0 text-[#6362CD]" strokeWidth={1.75} aria-hidden />
+                <div>
+                  <div className="text-[13px] font-medium text-[#343744]">Intelligent Historical Search</div>
+                  <div className="text-[9px] text-[#696969]">Query past records naturally</div>
+                </div>
+              </div>
+
+              {/* Approval card */}
+              <div className="absolute left-[20px] top-[172px] w-[240px] bg-white border border-[#f3f4f6] rounded-[14px] shadow-[0_6px_20px_rgba(0,0,0,0.07)] p-[14px]">
+                <div className="text-[13px] font-medium text-[#101828]">AI Task Completed</div>
+                <div className="text-[9px] text-[#6a7282]">Weekly Reconciliation</div>
+                <div className="mt-[10px] flex flex-col gap-[6px]">
+                  <div className="flex items-center gap-[7px]">
+                    <Check className="h-3 w-3 shrink-0 text-[#6362CD]" strokeWidth={2.5} aria-hidden />
+                    <span className="text-[10px] text-[#364153]">48 transactions matched</span>
+                  </div>
+                  <div className="flex items-center gap-[7px]">
+                    <Check className="h-3 w-3 shrink-0 text-[#6362CD]" strokeWidth={2.5} aria-hidden />
+                    <span className="text-[10px] text-[#364153]">Reconciliation completed</span>
+                  </div>
+                </div>
+                <div className="mt-[10px] flex gap-[8px]">
+                  <button type="button" className="flex-1 h-[24px] rounded-[6px] bg-[#2FA084] text-white text-[10px] font-medium">Approve</button>
+                  <button type="button" className="flex-1 h-[24px] rounded-[6px] bg-white border border-[#d1d5dc] text-[#364153] text-[10px] font-medium">Request Changes</button>
+                </div>
+              </div>
+
+              {/* Discrepancy card (below approval) */}
+              <div className="absolute left-[20px] top-[370px] w-[240px] h-[62px] bg-white rounded-[12px] shadow-[0_6px_20px_rgba(0,0,0,0.07)] flex items-center px-[12px] gap-[10px]">
+                <AlertTriangle className="h-7 w-7 shrink-0 text-amber-500" strokeWidth={1.75} aria-hidden />
+                <div>
+                  <div className="text-[13px] font-medium text-[#343744]">2 discrepancies flagged</div>
+                  <div className="text-[9px] text-[#696969]">Bankbook and statement mismatch</div>
+                </div>
+              </div>
+
+              {/* Financial summary card */}
+              <div className="absolute right-[16px] top-[108px] w-[230px] bg-white border border-[#f3f4f6] rounded-[14px] shadow-[0_6px_20px_rgba(0,0,0,0.07)] p-[14px]">
+                <div className="text-[13px] font-semibold text-[#101828]">March Financial Summary</div>
+                <div className="mt-[8px] flex justify-between text-[9px] text-[#6a7282] uppercase tracking-wide">
+                  <span>Revenue</span><span>Expenses</span><span>Net Profit</span>
+                </div>
+                <div className="mt-[4px] flex justify-between text-[14px] font-semibold">
+                  <span className="text-[#101828]">$42,580</span>
+                  <span className="text-[#101828]">$28,340</span>
+                  <span className="text-[#10b981]">$14,240</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2961,24 +3019,6 @@ export default function Page() {
       <HowItWorks />
 
       {/* Solutions — scroll section removed */}
-
-      <hr className="section-divider" aria-hidden />
-
-      {/* Security — concise, product-style control */}
-      <section id="governance" className="bg-white py-20 md:py-24 lg:py-28">
-        <div className="mx-auto w-full max-w-[1280px] px-6">
-          <div className="mx-auto max-w-[760px] text-center">
-            <h3 className="text-[1.6rem] font-semibold leading-[1.12] tracking-[-0.03em] text-[#0B0F1A] sm:text-[1.85rem]">
-              You control your data
-            </h3>
-            <p className="mt-3 text-[15px] leading-relaxed text-[#4B5563]">
-              Choose how your system runs. Your data stays where you decide.
-            </p>
-          </div>
-
-          <SecurityTabs reduceMotion={reduceMotion} />
-        </div>
-      </section>
 
       <hr className="section-divider" aria-hidden />
 
