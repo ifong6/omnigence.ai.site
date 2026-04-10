@@ -2442,7 +2442,7 @@ export default function Page() {
       <Nav />
 
       {/* Hero — full viewport like Vercel */}
-      <section className="relative min-h-screen bg-[#fafafa] overflow-hidden pb-20 md:pb-24 lg:pb-28">
+      <section className="relative min-h-screen bg-[#fafafa] overflow-hidden pt-10 md:pt-14 lg:pt-16 pb-20 md:pb-24 lg:pb-28">
         {/* Hero grid (Figma-accurate) - disabled; use legacy pixel-accurate block below */}
         <div className="hidden relative z-10 mx-auto max-w-[1510px] px-6 lg:px-[80px] h-full flex items-center">
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-[44px]">
@@ -2691,7 +2691,7 @@ export default function Page() {
 
             {/* Gradient panel — height 750px so 82 + 750 = 832px; avoids overflow clip / angled edge at section bottom */}
             <motion.div
-              className="absolute left-[633px] top-[82px] w-[879px] h-[750px] rounded-bl-[28px] rounded-tl-[28px] overflow-hidden"
+              className="absolute left-[633px] top-[82px] w-[879px] h-[750px] rounded-[28px] overflow-hidden"
               style={{
                 backgroundImage:
                   "radial-gradient(240px 240px at 94% 11%, rgba(21,93,252,0.52) 0%, rgba(47,110,249,0.42) 18%, rgba(74,127,245,0.30) 34%, rgba(58,69,220,0.16) 56%, rgba(98,103,223,0.10) 66%, rgba(138,138,225,0.06) 74%, rgba(0,0,0,0) 92%), linear-gradient(137.33937931403239deg, rgb(230, 225, 236) 25%, rgba(111, 115, 175, 0.6) 45%, rgb(123, 143, 212) 70%, rgb(59, 79, 184) 100%)",
