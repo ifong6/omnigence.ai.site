@@ -200,23 +200,12 @@ img[alt="Omnigence logo"] {
 
 /* Three pillars — cool blue/aqua field with subtle violet depth */
 .pillar-panel-gradient {
-  background-image:
-    radial-gradient(ellipse 78% 58% at 86% 16%, rgba(61, 107, 255, 0.44) 0%, transparent 62%),
-    radial-gradient(ellipse 70% 52% at 14% 84%, rgba(124, 58, 237, 0.22) 0%, transparent 58%),
-    radial-gradient(ellipse 64% 48% at 46% 12%, rgba(60, 59, 255, 0.18) 0%, transparent 56%),
-    linear-gradient(
-      145deg,
-      rgba(231, 242, 255, 0.86) 0%,
-      rgba(61, 107, 255, 0.26) 28%,
-      rgba(43, 91, 200, 0.22) 52%,
-      rgba(60, 59, 255, 0.20) 74%,
-      rgba(124, 58, 237, 0.16) 100%
-    );
+  background: #f4f4f5;
 }
 
 /* Full-panel dot grid for pillar tab */
 .pillar-panel-dots {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
@@ -226,8 +215,8 @@ img[alt="Omnigence logo"] {
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
-  min-height: 20rem;
-  padding: clamp(1.25rem, 4vw, 2.75rem);
+  min-height: 16rem;
+  padding: clamp(1rem, 3vw, 2rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,19 +224,16 @@ img[alt="Omnigence logo"] {
 
 @media (min-width: 640px) {
   .pillar-visual-stage {
-    min-height: 24rem;
+    min-height: 18rem;
   }
 }
 
 /* Shared floating white card — stronger depth vs gradient + stage */
 .pillar-content-card {
-  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  background: #ffffff;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.88);
-  box-shadow:
-    0 0 0 1px rgba(13, 22, 48, 0.05),
-    0 16px 42px rgba(13, 22, 48, 0.14),
-    0 30px 78px rgba(13, 22, 48, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* Solutions section: product preview panel dot grid */
@@ -339,96 +325,6 @@ img[alt="Omnigence logo"] {
   animation: cta-cluster-dots-drift 22s ease-in-out infinite;
 }
 
-/* Dark CTA section dots (Figma-like placement + density) */
-.cta-dark-dots {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.42) 1px, transparent 1px);
-  background-size: 16px 16px;
-  opacity: 0.56;
-  overflow: hidden;
-  will-change: opacity, transform;
-  /* Not uniform across full section: dots are strong in central bands, faint at outer zones */
-  mask-image:
-    radial-gradient(ellipse 36% 58% at 24% 42%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 78%),
-    radial-gradient(ellipse 36% 58% at 76% 42%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 78%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 35%, rgba(0, 0, 0, 0.2) 100%);
-  -webkit-mask-image:
-    radial-gradient(ellipse 36% 58% at 24% 42%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 78%),
-    radial-gradient(ellipse 36% 58% at 76% 42%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 78%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 35%, rgba(0, 0, 0, 0.2) 100%);
-  mask-composite: add;
-  -webkit-mask-composite: source-over;
-  animation:
-    cta-dot-opacity-pulse 5.4s ease-in-out infinite,
-    cta-dot-subtle-drift 18s ease-in-out infinite;
-}
-
-.cta-dark-dots::after {
-  content: "";
-  position: absolute;
-  inset: -12%;
-  pointer-events: none;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 22%,
-    rgba(255, 255, 255, 0.045) 46%,
-    rgba(255, 255, 255, 0.06) 52%,
-    rgba(255, 255, 255, 0.03) 58%,
-    rgba(255, 255, 255, 0) 78%
-  );
-  opacity: 0.18;
-  mix-blend-mode: screen;
-  transform: translate3d(-18%, -8%, 0);
-  will-change: transform, opacity;
-  animation: cta-dot-light-wave 21s linear infinite;
-}
-
-@keyframes cta-dot-opacity-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.62; }
-}
-
-@keyframes cta-dot-light-wave {
-  0% {
-    transform: translate3d(-18%, -8%, 0);
-    opacity: 0.12;
-  }
-  50% {
-    transform: translate3d(12%, 8%, 0);
-    opacity: 0.2;
-  }
-  100% {
-    transform: translate3d(38%, 20%, 0);
-    opacity: 0.12;
-  }
-}
-
-@keyframes cta-dot-subtle-drift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(1.5px, -1px, 0); }
-}
-
-@keyframes cta-cluster-dots-drift {
-  0%, 100% {
-    mask-position: 12% 22%, 82% 28%, 48% 12%, 24% 58%;
-    -webkit-mask-position: 12% 22%, 82% 28%, 48% 12%, 24% 58%;
-  }
-  25% {
-    mask-position: 55% 55%, 22% 72%, 28% 78%, 72% 24%;
-    -webkit-mask-position: 55% 55%, 22% 72%, 28% 78%, 72% 24%;
-  }
-  50% {
-    mask-position: 88% 28%, 62% 18%, 92% 48%, 42% 88%;
-    -webkit-mask-position: 88% 28%, 62% 18%, 92% 48%, 42% 88%;
-  }
-  75% {
-    mask-position: 30% 65%, 75% 55%, 15% 35%, 58% 45%;
-    -webkit-mask-position: 30% 65%, 75% 55%, 15% 35%, 58% 45%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .cta-cluster-dots,
   .hero-sparkle-dots {
@@ -436,13 +332,5 @@ img[alt="Omnigence logo"] {
   }
   .hero-sparkle-dots {
     opacity: 0.7;
-  }
-  .cta-dark-dots,
-  .cta-dark-dots::after {
-    animation: none;
-  }
-  .cta-dark-dots::after {
-    opacity: 0.1;
-    transform: translate3d(0, 0, 0);
   }
 }
