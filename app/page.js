@@ -2445,7 +2445,7 @@ export default function Page() {
       <Nav />
 
       {/* Hero — full viewport like Vercel */}
-      <section className="relative min-h-screen bg-[#fafafa] overflow-hidden pt-10 md:pt-14 lg:pt-16 pb-20 md:pb-24 lg:pb-28">
+      <section className="relative min-h-screen bg-[#fafafa] overflow-hidden pt-20 md:pt-24 lg:pt-28 pb-20 md:pb-24 lg:pb-28">
         {/* Hero grid (Figma-accurate) - disabled; use legacy pixel-accurate block below */}
         <div className="hidden relative z-10 mx-auto max-w-[1510px] px-6 lg:px-[80px] h-full flex items-center">
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-[44px]">
@@ -2483,7 +2483,7 @@ export default function Page() {
                     width: 879,
                     height: 810,
                     backgroundImage:
-                      "radial-gradient(240px 240px at 94% 11%, rgba(21,93,252,0.52) 0%, rgba(47,110,249,0.42) 18%, rgba(74,127,245,0.30) 34%, rgba(58,69,220,0.16) 56%, rgba(98,103,223,0.10) 66%, rgba(138,138,225,0.06) 74%, rgba(0,0,0,0) 92%), linear-gradient(137.33937931403239deg, rgb(230, 225, 236) 25%, rgba(111, 115, 175, 0.6) 45%, rgb(123, 143, 212) 70%, rgb(59, 79, 184) 100%)",
+                      "radial-gradient(240px 240px at 94% 11%, rgba(155,142,199,0.35) 0%, rgba(189,166,206,0.28) 18%, rgba(180,211,217,0.22) 34%, rgba(155,142,199,0.12) 56%, rgba(189,166,206,0.08) 66%, rgba(242,234,224,0.05) 74%, rgba(0,0,0,0) 92%), linear-gradient(137deg, #F2EAE0 25%, #B4D3D9 45%, #BDA6CE 70%, #9B8EC7 100%)",
                   }}
                 >
                   <div
@@ -2513,15 +2513,15 @@ export default function Page() {
                     }}
                   />
                   {/* Upload */}
-                  <div className="absolute left-[104px] top-[110px] w-[220px] h-[68px] bg-[#0e0c0c] rounded-[16px] shadow-[0_10px_15px_rgba(0,0,0,0.1),0_4px_6px_rgba(0,0,0,0.1)] flex items-center justify-center px-[24px]">
-                    <p className="text-[14px] font-medium text-white leading-[normal] text-center">
+                  <div className="absolute left-[104px] top-[110px] w-[220px] h-[68px] bg-[#B4D3D9] rounded-[16px] shadow-[0_10px_15px_rgba(0,0,0,0.06),0_4px_6px_rgba(0,0,0,0.04)] flex items-center justify-center px-[24px]">
+                    <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal] text-center">
                       Upload Files
                     </p>
                   </div>
 
                   {/* Structured Business Data */}
-                  <div className="absolute left-[104px] top-[192px] w-[220px] h-[68px] bg-[#807FD9] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.14),0_4px_8px_rgba(0,0,0,0.1)] flex items-center justify-center px-[24px]">
-                    <p className="text-[14px] font-medium text-white leading-[normal] text-center">
+                  <div className="absolute left-[104px] top-[192px] w-[220px] h-[68px] bg-[#BDA6CE] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.08),0_4px_8px_rgba(0,0,0,0.04)] flex items-center justify-center px-[24px]">
+                    <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal] text-center">
                       Structured Business Data
                     </p>
                   </div>
@@ -2697,7 +2697,7 @@ export default function Page() {
               className="absolute left-[633px] top-[82px] w-[879px] h-[750px] rounded-[28px] overflow-hidden"
               style={{
                 backgroundImage:
-                  "radial-gradient(240px 240px at 94% 11%, rgba(21,93,252,0.52) 0%, rgba(47,110,249,0.42) 18%, rgba(74,127,245,0.30) 34%, rgba(58,69,220,0.16) 56%, rgba(98,103,223,0.10) 66%, rgba(138,138,225,0.06) 74%, rgba(0,0,0,0) 92%), linear-gradient(137.33937931403239deg, rgb(230, 225, 236) 25%, rgba(111, 115, 175, 0.6) 45%, rgb(123, 143, 212) 70%, rgb(59, 79, 184) 100%)",
+                  "radial-gradient(240px 240px at 94% 11%, rgba(155,142,199,0.35) 0%, rgba(189,166,206,0.28) 18%, rgba(180,211,217,0.22) 34%, rgba(155,142,199,0.12) 56%, rgba(189,166,206,0.08) 66%, rgba(242,234,224,0.05) 74%, rgba(0,0,0,0) 92%), linear-gradient(137deg, #F2EAE0 25%, #B4D3D9 45%, #BDA6CE 70%, #9B8EC7 100%)",
               }}
               initial={heroVisualEnter}
               animate={{ opacity: 1, y: 0 }}
@@ -2730,23 +2730,23 @@ export default function Page() {
 
             {/* Upload / structured buttons */}
             <motion.div
-              className="absolute left-[836px] top-[278px] w-[220px] h-[68px] bg-[#0e0c0c] rounded-[16px] shadow-[0px_10px_15px_rgba(0,0,0,0.1),0px_4px_6px_rgba(0,0,0,0.1)] flex items-center justify-center text-center px-[24px]"
+              className="absolute left-[836px] top-[278px] w-[220px] h-[68px] bg-[#B4D3D9] rounded-[16px] shadow-[0_10px_15px_rgba(0,0,0,0.06),0_4px_6px_rgba(0,0,0,0.04)] flex items-center justify-center text-center px-[24px]"
               initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.42, delay: 0.28, ease: heroEase }}
             >
-              <p className="text-[14px] font-medium text-white leading-[normal]">
+              <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal]">
                 Upload Files
               </p>
             </motion.div>
 
             <motion.div
-              className="absolute left-[836px] top-[360px] w-[220px] h-[68px] bg-[#3b4fb8] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.14),0_4px_8px_rgba(0,0,0,0.1)] flex items-center justify-center text-center px-[24px]"
+              className="absolute left-[836px] top-[360px] w-[220px] h-[68px] bg-[#BDA6CE] rounded-[16px] shadow-[0_12px_18px_rgba(0,0,0,0.08),0_4px_8px_rgba(0,0,0,0.04)] flex items-center justify-center text-center px-[24px]"
               initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.42, delay: 0.48, ease: heroEase }}
             >
-              <p className="text-[14px] font-medium text-white leading-[normal]">
+              <p className="text-[14px] font-medium text-[#2a2a2a] leading-[normal]">
                 Structured Business Data
               </p>
             </motion.div>
