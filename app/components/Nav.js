@@ -36,7 +36,7 @@ export default function Nav() {
               Product
             </Link>
             <Link href="/#how" className={navLinkClass}>
-              How it works
+              Key Features
             </Link>
             <Link href="/#governance" className={navLinkClass}>
               Security

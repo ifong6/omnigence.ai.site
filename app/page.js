@@ -724,7 +724,7 @@ const HowItWorks = () => {
     >
       <div className="mx-auto w-full max-w-[1280px] px-6">
         <div className="text-center mb-16 md:mb-20">
-          <span className="text-[20px] font-bold uppercase tracking-[0.1em] text-[#6362CD]">How it works</span>
+          <span className="text-[20px] font-bold uppercase tracking-[0.1em] text-[#6362CD]">Key Features</span>
         </div>
 
       {/* Step 1 — text left, visual right */}
@@ -2131,7 +2131,7 @@ const Nav = () => {
               Product
             </a>
             <a href="#how" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
-              How it works
+              Key Features
             </a>
             <a href="#deployment" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               Deployment
@@ -2167,7 +2167,7 @@ const Nav = () => {
               Product
             </a>
             <a href="#how" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
-              How it works
+              Key Features
             </a>
             <a href="#deployment" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               Deployment
@@ -2341,6 +2341,21 @@ export default function Page() {
   const [heroNumbersStart, setHeroNumbersStart] = useState(false);
   const [heroMounted, setHeroMounted] = useState(false);
 
+  // Scale the desktop hero to fit viewports narrower than the 1510px design width.
+  const HERO_DESIGN_WIDTH = 1510;
+  const [heroScale, setHeroScale] = useState(1);
+
+  useEffect(() => {
+    function updateHeroScale() {
+      const vw = window.innerWidth;
+      const s = vw >= HERO_DESIGN_WIDTH ? 1 : Math.round((vw / HERO_DESIGN_WIDTH) * 1000) / 1000;
+      setHeroScale(s);
+    }
+    updateHeroScale();
+    window.addEventListener("resize", updateHeroScale);
+    return () => window.removeEventListener("resize", updateHeroScale);
+  }, []);
+
   useEffect(() => {
     if (reduceMotion) {
       setHeroNumbersStart(true);
@@ -2416,15 +2431,15 @@ export default function Page() {
               <h1 className="font-bold text-[48px] leading-[1.03] tracking-[-0.03em] text-gray-900 sm:text-[56px] lg:text-[64px]">
                 Specialized SMB AI Agents for Day-to-Day Tasks
               </h1>
-              <p className="mt-6 text-[16px] leading-[24px] text-[#6B7280]">
-                Turn documents, approvals, and business domain into automated workflows.
+              <p className="mt-6 text-[16px] leading-[24px] text-[#6B7280] text-justify">
+                From a simple request to polished documents for you and your team to review, approve, and send.
               </p>
               <div className="mt-8 flex items-center gap-3">
                 <a
                   href="#how"
                   className="inline-flex box-border h-[46px] w-[240px] items-center justify-center gap-2 rounded-full bg-[#6362CD] px-5 py-0 text-sm font-medium leading-none text-white hover:bg-[#7868E6] transition-colors"
                 >
-                  See How It Works <ArrowRight className="h-4 w-4" />
+                  See Your Use Case <ArrowRight className="h-4 w-4" />
                 </a>
                 <Btn
                   href="/api"
@@ -2612,7 +2627,14 @@ export default function Page() {
 
         {/* Desktop/Figma-accurate hero */}
         <div className="hidden lg:block">
-          <div className="relative mx-auto w-full max-w-[1510px] h-[832px]">
+          <div
+            className="relative mx-auto w-full max-w-[1510px] h-[832px]"
+            style={heroScale < 1 ? {
+              transform: `scale(${heroScale})`,
+              transformOrigin: "top center",
+              height: `${Math.ceil(832 * heroScale)}px`,
+            } : undefined}
+          >
             {/* Left headline + CTA — aligned with navbar via calc */}
             <div className="absolute left-[max(calc((100%-1280px)/2+24px),24px)] top-1/2 -translate-y-[55%] z-10 max-w-[400px]">
               <motion.h1
@@ -2621,15 +2643,15 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.02, ease: heroEase }}
               >
-                Specialized SMB AI Agents for Day-to-Day Tasks
+                Specialized <span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">SMB AI Agents</span> for Day-to-Day Tasks
               </motion.h1>
               <motion.p
-                className="relative z-[1] mt-6 text-[16px] leading-[1.6] text-[#0e0c0c]/60 max-w-[340px]"
+                className="relative z-[1] mt-6 text-[16px] leading-[1.6] text-[#0e0c0c]/60 max-w-[340px] text-justify"
                 initial={heroTextEnter}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.48, delay: 0.1, ease: heroEase }}
               >
-                Turn documents, approvals, and business domain into automated workflows.
+                From a simple request to polished documents for you and your team to review, approve, and send.
               </motion.p>
               <motion.div
                 className="relative z-[1] mt-10 flex items-center gap-3"
@@ -2642,7 +2664,7 @@ export default function Page() {
                   variant="navPrimary"
                   className="box-border w-[240px] whitespace-nowrap leading-none"
                 >
-                  See How It Works <ArrowRight className="h-4 w-4" />
+                  See Your Use Case <ArrowRight className="h-4 w-4" />
                 </Btn>
                 <Btn
                   href="/api"
@@ -2878,8 +2900,8 @@ export default function Page() {
             <h1 className="text-[40px] font-bold leading-[1.05] tracking-[-0.04em] text-gray-900">
               Specialized SMB AI Agents for Day-to-Day Tasks
             </h1>
-            <p className="mt-6 text-[16px] leading-[1.7] text-[#6B7280]">
-              Turn documents, approvals, and business domain into automated workflows.
+            <p className="mt-6 text-[16px] leading-[1.7] text-[#6B7280] text-justify">
+              From a simple request to polished documents for you and your team to review, approve, and send.
             </p>
             <div className="mt-10 flex items-center gap-3">
               <Btn
@@ -2887,7 +2909,7 @@ export default function Page() {
                 variant="primary"
                 className="box-border h-[46px] w-[160px] px-5 bg-[#6362CD] whitespace-nowrap leading-none"
               >
-                See How It Works
+                See Your Use Case
               </Btn>
               <Btn
                 href="/api"
@@ -2990,9 +3012,9 @@ export default function Page() {
           {/* Cards — equal height for a cleaner row */}
           <div className="mt-11 md:mt-14 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-7">
             {[
-              { icon: RefreshCw, title: "Manual Work", desc: "Automate repetitive document handling, approvals, and reconciliation." },
-              { icon: Layers, title: "Connected Workflows", desc: "Unify spreadsheets, documents, and team actions in one operational flow." },
-              { icon: ShieldCheck, title: "Error Prevention", desc: "Catch mismatches and missing data before they turn into costly issues." },
+              { icon: RefreshCw, title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Agentic</span> Automation</>, desc: "AI agents handle routine prep — you approve before anything goes out." },
+              { icon: Users, title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Specialized</span> Agents</>, desc: "Different agents own proposals, invoices, and reconciliations — and share data automatically." },
+              { icon: GitBranch, title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Connected</span> Workflows</>, desc: "All your documents flow through one place; discrepancies surface before they cost you." },
             ].map((card, i) => (
               <div
                 key={i}
