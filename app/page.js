@@ -1037,8 +1037,8 @@ const pillarTabs = [
   },
   {
     id: "security",
-    title: "Data Security",
-    description: "Your data never leaves your control.",
+    title: "About",
+    description: "Run on your machines or ours — you choose.",
   },
 ];
 
@@ -1390,36 +1390,36 @@ const PillarSecurityVisual = () => {
       local: {
         icon: Database,
         label: "You own your data",
-        description: "Keep data inside your environment, under your policies and control.",
+        description: "Everything runs inside your own environment. No data leaves your walls — ever.",
       },
       cloud: {
         icon: ShieldCheck,
         label: "Zero data retention",
-        description: "Process data without storing it after the work is done.",
+        description: "Your data is processed and returned — nothing is kept on our servers after the job completes.",
       },
     },
     {
       local: {
         icon: Coins,
-        label: "Save tokens",
-        description: "Run locally to avoid ongoing token usage and recurring cost.",
+        label: "Enjoy low token costs",
+        description: "Run locally to save token usages up to 79%.",
       },
       cloud: {
         icon: Cloud,
-        label: "No overhead",
-        description: "Skip the setup, scaling, and maintenance work of managing infrastructure.",
+        label: "Zero IT overhead",
+        description: "No hardware purchases, no servers to manage. Sign in and start working in minutes.",
       },
     },
     {
       local: {
         icon: Layers,
-        label: "Runs on your machine",
-        description: "Deploy close to your team and systems in a self-contained setup.",
+        label: "Runs on your office machine",
+        description: "We ship a fully configured machine tailored to your business — no setup required, just plug in and start automating.",
       },
       cloud: {
         icon: KeyRound,
-        label: "Fully managed deployment",
-        description: "Run in the cloud or your VPC with managed operations already in place.",
+        label: "Always on, always current",
+        description: "We handle uptime, updates, and scaling — your team just uses the product.",
       },
     },
   ];
@@ -1441,7 +1441,7 @@ const PillarSecurityVisual = () => {
           animate={inView ? { opacity: 1, y: 0 } : reduceMotion ? {} : { opacity: 0, y: 8 }}
           transition={reduceMotion ? { duration: 0 } : { duration: 0.35, delay: 0.08 }}
         >
-          local
+          on-premise
         </motion.h4>
         <motion.div
           className="self-stretch bg-gray-200"
@@ -1491,12 +1491,12 @@ const PillarSecurityVisual = () => {
             transition={reduceMotion ? { duration: 0 } : { duration: 0.35, delay: 0.24 + index * 0.08 }}
           >
             <div className="flex items-start gap-3">
-              <row.local.icon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-gray-500" aria-hidden />
+              <row.local.icon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-[#4338CA]" aria-hidden />
               <div className="min-w-0">
                 <p className="text-[14px] font-medium leading-[1.35] text-gray-900">
                   {row.local.label}
                 </p>
-                <p className="mt-1 text-[12.5px] leading-[1.5] text-gray-500">
+                <p className="mt-1 text-[12.5px] leading-[1.5] text-gray-500 text-justify">
                   {row.local.description}
                 </p>
               </div>
@@ -1512,12 +1512,12 @@ const PillarSecurityVisual = () => {
             />
 
             <div className="flex items-start gap-3">
-              <row.cloud.icon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-gray-500" aria-hidden />
+              <row.cloud.icon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-[#4338CA]" aria-hidden />
               <div className="min-w-0">
                 <p className="text-[14px] font-medium leading-[1.35] text-gray-900">
                   {row.cloud.label}
                 </p>
-                <p className="mt-1 text-[12.5px] leading-[1.5] text-gray-500">
+                <p className="mt-1 text-[12.5px] leading-[1.5] text-gray-500 text-justify">
                   {row.cloud.description}
                 </p>
               </div>
@@ -1544,7 +1544,7 @@ const pillarPanelCopy = {
     Visual: PillarAutomationVisual,
   },
   security: {
-    headline: <>You <span className="text-[#6362CD]">control</span> your data</>,
+    headline: <>Your <span className="text-[#6362CD]">environment</span>, your rules</>,
     sub: "Choose how your system runs. Your data stays where you decide.",
     Visual: PillarSecurityVisual,
   },
@@ -1677,7 +1677,7 @@ const WhoItsForSection = () => {
                   <h3 className="text-[1.6rem] sm:text-[1.85rem] md:text-[2rem] font-semibold leading-[1.2] tracking-tight text-gray-900 [text-wrap:balance]">
                     {panel.headline}
                   </h3>
-                  <p className="mt-3 text-[15px] text-gray-500 leading-relaxed [text-wrap:pretty] max-w-[560px] mx-auto">{panel.sub}</p>
+                  <p className="mt-3 text-[15px] text-gray-500 leading-relaxed [text-wrap:pretty] max-w-[720px] mx-auto">{panel.sub}</p>
                 </div>
                 <div className="flex-1 flex items-center justify-center w-full">
                   <div className="pillar-visual-stage w-full">
@@ -2127,14 +2127,14 @@ const Nav = () => {
           </a>
 
           <div className="hidden md:flex items-center justify-center gap-8">
-            <a href="#product" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
-              Product
-            </a>
             <a href="#how" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               Key Features
             </a>
+            <a href="#product" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
+              Multi-Agents
+            </a>
             <a href="#deployment" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
-              Deployment
+              About
             </a>
           </div>
 
@@ -2163,14 +2163,14 @@ const Nav = () => {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-md px-6 pb-5 pt-3">
           <div className="flex flex-col gap-4">
-            <a href="#product" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
-              Product
-            </a>
             <a href="#how" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               Key Features
             </a>
+            <a href="#product" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
+              Multi-Agents
+            </a>
             <a href="#deployment" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
-              Deployment
+              About
             </a>
             <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-gray-700 transition-colors hover:text-[#6362CD]">
               Request a Demo
@@ -3004,17 +3004,20 @@ export default function Page() {
         <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-6">
           <h2 className="sr-only">Operations overview</h2>
           {/* Section intro — single paragraph; browser wraps naturally within max-width */}
-          <p className="mx-auto max-w-[min(900px,100%)] text-center text-[28px] md:text-[30px] font-medium leading-[1.4] tracking-[-0.01em] text-[#111827]">
-            Less manual work. More connected operations. Fewer costly mistakes.{" "}
-            <span className="text-[#6B7280]">Innovate your process from the ground up</span>
+          <p className="mx-auto max-w-[min(1000px,100%)] text-center text-[28px] md:text-[30px] font-medium leading-[1.4] tracking-[-0.01em] text-[#111827]">
+            Tedious manual tasks. Fragmented systems. Hidden business insights.
+          </p>
+          <p className="mx-auto mt-3 text-center text-[28px] md:text-[30px] font-medium leading-[1.4] tracking-[-0.01em] text-[#6B7280]">
+            <em className="italic">Innovate</em> your process from the ground up.
           </p>
 
           {/* Cards — equal height for a cleaner row */}
-          <div className="mt-11 md:mt-14 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-7">
+          <div className="mt-11 md:mt-14 mx-auto max-w-[900px] grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-7">
             {[
-              { icon: RefreshCw, title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Agentic</span> Automation</>, desc: "AI agents handle routine prep — you approve before anything goes out." },
-              { icon: Users, title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Specialized</span> Agents</>, desc: "Different agents own proposals, invoices, and reconciliations — and share data automatically." },
-              { icon: GitBranch, title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Connected</span> Workflows</>, desc: "All your documents flow through one place; discrepancies surface before they cost you." },
+              { icon: RefreshCw, slug: "agentic-automation", title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Agentic</span> Automation</>, desc: "AI agents handle routine prep — you approve before anything goes out." },
+              { icon: Users, slug: "vertical-agents", title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Vertical</span> Agents</>, desc: "Purpose-built agents for your industry — healthcare, retail, consultancy, and more — each powered by a team of worker agents that handle finance, reconciliation, analytics, and beyond." },
+              { icon: GitBranch, slug: "connected-workflows", title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Connected</span> Workflows</>, desc: "All your documents flow through one place; discrepancies surface before they cost you." },
+              { icon: ScanSearch, slug: "intelligent-analytics", title: <><span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Intelligent</span> Analytics</>, desc: "Ask questions in plain language — contextual search connects the dots across every quote, invoice, and receipt to surface trends and answers no spreadsheet would catch." },
             ].map((card, i) => (
               <div
                 key={i}
@@ -3024,7 +3027,10 @@ export default function Page() {
                   <card.icon className="h-[20px] w-[20px] text-[#6362CD]" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.3] text-[#111] tracking-[-0.01em]">{card.title}</h3>
-                <p className="mt-3 text-[14.5px] leading-[1.65] text-[#6B7280] max-w-[300px]">{card.desc}</p>
+                <p className="mt-3 text-[14.5px] leading-[1.65] text-[#6B7280] text-justify">{card.desc}</p>
+                <div className="mt-auto pt-4 flex justify-end">
+                  <a href={`/${card.slug}`} className="text-[13px] font-medium text-[#6362CD] flex items-center gap-1 hover:underline">Learn more <ArrowRight className="h-3.5 w-3.5" /></a>
+                </div>
               </div>
             ))}
           </div>

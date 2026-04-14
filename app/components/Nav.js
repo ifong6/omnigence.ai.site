@@ -32,11 +32,11 @@ export default function Nav() {
           </Link>
 
           <div className="hidden md:flex items-center justify-center gap-8">
-            <Link href="/#product" className={navLinkClass}>
-              Product
-            </Link>
             <Link href="/#how" className={navLinkClass}>
               Key Features
+            </Link>
+            <Link href="/#product" className={navLinkClass}>
+              Agents
             </Link>
             <Link href="/#governance" className={navLinkClass}>
               Security
