@@ -2429,7 +2429,7 @@ export default function Page() {
             {/* Left */}
             <div className="max-w-[440px]">
               <h1 className="font-bold text-[48px] leading-[1.03] tracking-[-0.03em] text-gray-900 sm:text-[56px] lg:text-[64px]">
-                Specialized SMB AI Agents for Day-to-Day Tasks
+                Vertical AI that actually runs your SMB
               </h1>
               <p className="mt-6 text-[16px] leading-[24px] text-[#6B7280] text-justify">
                 From a simple request to polished documents for you and your team to review, approve, and send.
@@ -2643,7 +2643,7 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.02, ease: heroEase }}
               >
-                Specialized <span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">SMB AI Agents</span> for Day-to-Day Tasks
+                <span className="text-[#7a72d6] drop-shadow-[0_1px_0.8px_rgba(107,101,96,0.12)]">Vertical AI</span> that actually runs your SMB
               </motion.h1>
               <motion.p
                 className="relative z-[1] mt-6 text-[16px] leading-[1.6] text-[#0e0c0c]/60 max-w-[340px] text-justify"
@@ -2898,7 +2898,7 @@ export default function Page() {
         <div className="relative px-6 pb-16 lg:hidden">
           <div className="relative mx-auto max-w-[520px] pt-24 pb-8">
             <h1 className="text-[40px] font-bold leading-[1.05] tracking-[-0.04em] text-gray-900">
-              Specialized SMB AI Agents for Day-to-Day Tasks
+              Vertical AI that actually runs your SMB
             </h1>
             <p className="mt-6 text-[16px] leading-[1.7] text-[#6B7280] text-justify">
               From a simple request to polished documents for you and your team to review, approve, and send.
