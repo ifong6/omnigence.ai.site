@@ -1028,7 +1028,7 @@ const pillarTabs = [
   {
     id: "personalization",
     title: "Personalization",
-    description: "Your format, learned from one document.",
+    description: "Your business, understood inside and out.",
   },
   {
     id: "automation",
@@ -1037,7 +1037,7 @@ const pillarTabs = [
   },
   {
     id: "security",
-    title: "About",
+    title: "Control",
     description: "Run on your machines or ours — you choose.",
   },
 ];
@@ -1534,8 +1534,8 @@ const PILLAR_ROTATE_MS = 7500;
 
 const pillarPanelCopy = {
   personalization: {
-    headline: "Your document becomes structured data",
-    sub: "Show the model one sample—it learns your layout and maps the rest the same way.",
+    headline: "Your business becomes actionable knowledge",
+    sub: "The agent learns your operations end to end—logistics, finance, compliance—and structures everything the same way.",
     Visual: PillarPersonalizationVisual,
   },
   automation: {
